@@ -1,0 +1,11 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.kazach-model {
+  display: flex;
+  justify-content: center;
+}
