@@ -32,70 +32,60 @@
     <canvas id="c"></canvas>
     <script type="module">
         import { OBJLoader } from 'https://unpkg.com/three@0.119.1/examples/jsm/loaders/OBJLoader.js';
+        import { GLTFLoader } from 'https://unpkg.com/three@0.119.1/examples/jsm/loaders/GLTFLoader.js';
+        import { OrbitControls } from 'https://unpkg.com/three@0.119.1/examples/jsm/controls/OrbitControls.js';
 import * as THREE from 'https://unpkg.com/three@0.119.1/build/three.module.js';
     function main() {
   const canvas = document.querySelector('#c');
   const renderer = new THREE.WebGLRenderer({canvas,alpha: true});
 
-  const fov = 75;
-  const aspect = 2; 
+  const fov = 50;
+  const aspect = 1; 
   const near = 0.1;
-  const far = 5;
+  const far = 0;
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-  camera.position.z = 2;
-
+  camera.position.z = 5;
+        const controls = new OrbitControls(camera, renderer.domElement);
+let potato;
   const scene = new THREE.Scene();
-
-  const boxWidth = 1;
-  const boxHeight = 1;
-  const boxDepth = 1;
-        const objloader = new OBJLoader();
-  const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
-
-  const cubes = [];  // just an array we can use to rotate the cubes
-  const loader = new THREE.TextureLoader();
-
-  const material = new THREE.MeshBasicMaterial({
-    map: loader.load('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Flag_of_Kazakhstan_%283-2%29.svg/2560px-Flag_of_Kazakhstan_%283-2%29.svg.png'),
-  });
-  const cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
-  cubes.push(cube);  // add to our list of cubes to rotate
-
-  function resizeRendererToDisplaySize(renderer) {
-    const canvas = renderer.domElement;
-    const width = canvas.clientWidth;
-    const height = canvas.clientHeight;
-    const needResize = canvas.width !== width || canvas.height !== height;
-    if (needResize) {
-      renderer.setSize(width, height, false);
-    }
-    return needResize;
-  }
+        const light = new THREE.AmbientLight( 0xffffff ); 
+scene.add( light );
+        const gltfloader = new GLTFLoader();
+        gltfloader.load('./3d/ziemniak.gltf',
+	function ( gltf ) {
+            potato = gltf.scene;
+		scene.add( gltf.scene );
+		gltf.animations;
+		gltf.scene;
+		gltf.scenes;
+		gltf.cameras; 
+		gltf.asset; 
+               gltf.scene.position.x += 0;
+               gltf.scene.position.y += 0;
+               gltf.scene.position.z -= 0;
+            gltf.scene.scale.x = 0.5;
+            gltf.scene.scale.y = 0.5;
+            gltf.scene.scale.z = 0.5;
+            requestAnimationFrame(render);
+	},
+	function ( xhr ) {
+	},
+	function ( error ) {
+		console.log( 'An error happened' );
+	}
+);
 
   function render(time) {
-    time *= 0.001;
-
-    if (resizeRendererToDisplaySize(renderer)) {
-      const canvas = renderer.domElement;
-      camera.aspect = canvas.clientWidth / canvas.clientHeight;
-      camera.updateProjectionMatrix();
-    }
-
-    cubes.forEach((cube, ndx) => {
-      const speed = .2 + ndx * .1;
-      const rot = time * speed;
-      cube.rotation.x = rot;
-      cube.rotation.y = rot;
-    });
-
+potato.rotation.x += 0.01;
+potato.rotation.y += 0.01;
+      
      renderer.setClearColor( 0x000000, 0 );
     renderer.render(scene, camera);
 
     requestAnimationFrame(render);
   }
 
-  requestAnimationFrame(render);
+        
 }
 
 main();
