@@ -1,0 +1,4 @@
+- wchodzisz na strone
+- odpala sie napis potato_service, pod spodem 3d model ziemniaka (potrzebne Three.js) ktury mozesz obracac
+- pod nim przycisk zaloguj
+- dopiero po zalogowaniu podłącz do bazy użytkownika
