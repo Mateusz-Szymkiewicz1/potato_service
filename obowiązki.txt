@@ -9,3 +9,9 @@ podsiadło - serwer
 chrabaszcz - uprawnienia
 czuprynski - dodawanie danych
 bedla - html
+biernat - dachy
+igor - cokolwiek
+wojtyna - wszystko
+jasinski - qa tester
+zgorzelski - zapytania
+staszewski - morale
