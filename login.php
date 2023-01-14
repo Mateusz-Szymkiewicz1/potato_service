@@ -8,6 +8,9 @@ try {
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
   ));
+ session_start();
+$_SESSION['login'] = $username;
+$_SESSION['haslo'] = $password;
  echo '<script>'.'window.location.replace("home.php");'.'</script>';
 }
 catch(PDOException $e) {

@@ -1,0 +1,66 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Sofia Sans Extra Condensed';
+}
+h1{
+    margin: 0;
+    padding: 0;
+    font-size: 42px;
+    float: left;
+    margin-top: 27px;
+    margin-left: 17px;
+}
+.logo{
+    float: left;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.top{
+    width: 100%;
+    height: 120px;
+}
+a{
+    color: #000;
+    text-decoration: none;
+}
+.greet{
+    font-size: 40px;
+    margin-left: 107px;
+    font-weight: 900;
+}
+.greet2{
+    margin-left: 107px;
+    font-size: 30px;
+}
+.grid{
+    display: flex;
+    margin-left: 107px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+.card{
+    height: 320px;
+    width: 250px;
+    background: #eed996;
+    margin: 20px;
+    margin-left: 0;
+    cursor: pointer;
+    transition: 0.4s;
+    border-radius: 5px;
+    text-align: center;
+    color: #fff;
+}
+.card:hover{
+    transform: scale(0.98);
+}
+.card i {
+    font-size: 120px;
+    margin-top: 60px;
+}
+.card span{
+     display: block;
+    font-size: 50px;
+    font-weight: 900;
+    margin-top: 20px;
+}
