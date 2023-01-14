@@ -15,26 +15,36 @@
     if(!$_SESSION['login']){
         session_destroy();
         echo '<script>'.'window.location.replace("index.php");'.'</script>';
+    }else{
+        $login = $_SESSION['login'];
+        $db = new PDO("mysql:host=localhost;dbname=baza_testowa", $login, $_SESSION['haslo'],array(
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+        ));
+        $sql = "SELECT * FROM mysql.user WHERE USER LIKE 'root';";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $wiersz_user = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 ?>
 <body>
    <div class="top">
        <a href="#">
-        <img src="favicon.ico" alt="Logo" height="70px" width="70px" class="logo">
+        <img src="favicon.ico" alt="Logo" height="70px" width="70px" class="logo" draggable="false">
         <h1>Strona główna</h1>
        </a>
     </div>
     <span class="greet">Witaj, <?=$_SESSION['login']?></span><br />
     <span class="greet2">Co będziemy dzisiaj robić?</span>
     <div class="grid">
-        <div class="card">
-            <i class="fa fa-table"></i>
-            <span>Tabele</span>
-        </div>
-        <div class="card">
-            <i class="fa fa-user"></i>
-            <span>Użytkownicy</span>
-        </div>
+       <?php
+            if($wiersz_user['Select_priv']){
+               echo '<div class="card" id="tabele"><i class="fa fa-table"></i><span>Tabele</span></div>';
+            }
+            if($wiersz_user['Grant_priv'] or $wiersz_user['Create_user_priv']){
+               echo '<a href="users.php"><div class="card"><i class="fa fa-user"></i><span>Użytkownicy</span></div></a>';
+            }
+       ?>
         <a href="index.php">
             <div class="card">
                 <i class="fa fa-sign-out"></i>
@@ -42,5 +52,38 @@
             </div>
         </a>
     </div>
+    <div class="select_table" style="display: none;">
+       <h2>Wybierz tabelę:</h2>
+        <select name="select_table" id="select_table">
+            <?php
+                $sql = "SHOW TABLES;";
+                $stmt = $db->prepare($sql);
+                $stmt->execute();
+                while($wiersz = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    echo '<option>'.$wiersz["Tables_in_baza_testowa"].'</option>';
+                }
+            ?>
+        </select><br />
+        <button class="przejdz">Przejdź</button>
+        <button class="anuluj">Anuluj</button>
+    </div>
+    <script>
+        document.querySelector("#tabele").addEventListener("click", function(){
+            if(document.querySelector(".select_table").style.display == "none"){
+                document.querySelector(".select_table").style.animation = "slideInDown 0.5s ease";
+                document.querySelector(".select_table").style.display = "block";
+            }
+        })
+        document.querySelector(".anuluj").addEventListener("click", function(){
+            document.querySelector(".select_table").style.animation = "slideOutUp 0.5s ease";
+            setTimeout(function(){
+              document.querySelector(".select_table").style.display = "none";  
+            }, 500)
+        })
+        document.querySelector(".przejdz").addEventListener("click", function(){
+          let tabela = document.querySelector("select").value;
+          window.location.replace(`tabela.php?name=${tabela}`);
+        })
+    </script>
 </body>
 </html>

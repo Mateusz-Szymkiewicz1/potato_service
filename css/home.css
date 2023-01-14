@@ -53,6 +53,7 @@ a{
 }
 .card:hover{
     transform: scale(0.98);
+    background: #ddc885;
 }
 .card i {
     font-size: 120px;
@@ -64,3 +65,41 @@ a{
     font-weight: 900;
     margin-top: 20px;
 }
+.select_table{
+    position: absolute;
+    top: 30px;
+    background: #eee;
+    border: 1px solid #000;
+    height: 240px;
+    right: 35%;
+    left: 35%;
+    text-align: center;
+}
+.select_table h2 {
+    font-size: 28px;
+    margin-top: 45px;
+}
+.select_table select{
+    width: 140px;
+    height: 30px;
+    padding-left: 5px;
+    outline: none;
+}
+.select_table button{
+    margin: 5px;
+    margin-top: 13px;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.4s;
+    border: 1px solid #666;
+}
+.przejdz:hover{
+    background: #2ecc71;
+    color: #fff;
+}
+.anuluj:hover{
+    background: #e74c3c;
+    color: #fff;
+}
+@-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}
+@-webkit-keyframes slideOutUp{0%{-webkit-transform:translateZ(0);transform:translateZ(0)}to{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:hidden}}
