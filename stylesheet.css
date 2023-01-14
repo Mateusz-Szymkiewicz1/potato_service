@@ -15,36 +15,53 @@ image-rendering: pixelated;
 }
 h1{
     text-align: center;
-    margin-top: 100px;
     font-size: 55px;
+    margin-bottom: 10px;
 }
 form{
     display: block;
+    width: 350px;
     margin: auto;
     text-align: center;
     margin-bottom: 50px;
-    margin-top: 50px;
+    margin-top: 100px;
+    background: rgb(50,50,50,0.55);
+    border-radius: 10px;
+    padding-top: 5px;
+    color: #fff;
 }
 input{
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     outline: none;
     padding: 5px;
     padding-left: 6px;
 }
 input[type=submit]{
-    background: #fff;
-    border: 1px solid #000;
+    background: transparent;
+    border: 1px solid #fff;
     padding: 10px;
     width: 120px;
     cursor: pointer;
     transition: 0.4s;
+    color: #fff;
+    font-size: 16px;
 }
 input[type=submit]:hover{
-    background: #000;
-    color: #fff;
+    background: #fff;
+    color: #000;
 }
 label{
     font-size: 20px;
     font-weight:900;
     margin-right: 10px;
+    letter-spacing:1px;
+}
+i{
+    margin-right: 10px;
+}
+.error{
+    margin-bottom: 20px;
+    color: #e74c3c;
+    font-weight: 900;
+    font-size: 22px;
 }
