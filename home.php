@@ -21,7 +21,7 @@
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
         ));
-        $sql = "SELECT * FROM mysql.user WHERE USER LIKE 'root';";
+        $sql = "SELECT * FROM mysql.user WHERE USER LIKE '$login';";
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $wiersz_user = $stmt->fetch(PDO::FETCH_ASSOC);

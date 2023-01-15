@@ -25,12 +25,13 @@
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
                 ));
-                $sql = "SELECT * FROM mysql.user WHERE USER LIKE 'root';";
+                $login = $_SESSION['login'];
+                $sql = "SELECT * FROM mysql.user WHERE USER LIKE '$login';";
                 $stmt = $db->prepare($sql);
                 $stmt->execute();
                 $wiersz_user = $stmt->fetch(PDO::FETCH_ASSOC);
                 if($wiersz_user['Insert_priv']){
-                    echo '<i class="fa fa-pencil" id="pencil"></i>';
+                    echo '<i class="fa fa-plus" id="plus"></i>';
                 }
                 if($wiersz_user['Select_priv']){
                 $sql = "SELECT * FROM $tabela;";
@@ -73,34 +74,58 @@
             function str_starts_with($haystack, $needle) {
                 return (string)$needle !== '' && strncmp($haystack, $needle, strlen($needle)) === 0;
             }
+            function str_contains($haystack, $needle) {
+                return $needle !== '' && mb_strpos($haystack, $needle) !== false;
+            }
             $licznik = 0;
-            echo '<div class="insert_form" style="display: none;"><h2>Dodaj wiersz</h2><form action="insert.php" method="post">';
+            echo '<div class="insert_form" style="display: none;"><h2>Dodaj wiersz</h2><form action="insert.php" method="post"><input type="text" value="'.$tabela.'" name="tabela" hidden>';
             foreach($wiersz2 as $key => $value){
-                if(str_starts_with($types[$licznik], 'int')){
-                    echo '<input type="number" placeholder="0">'.$key.'<br/>';
+                $sql = "SHOW COLUMNS FROM `$tabela` WHERE Field = '$key';";
+                $stmt = $db->prepare($sql);
+                $stmt->execute();
+                $wiersz_kolumna = $stmt->fetch(PDO::FETCH_ASSOC);
+                $null = $wiersz_kolumna["Null"];
+                $ai = false;
+                if(str_contains($wiersz_kolumna["Extra"],"auto_increment")){
+                    $ai = true;
                 }
-                if(str_starts_with($types[$licznik], 'varchar')){
-                    echo '<input type="text" placeholder="'.$value.'...">'.$key.'<br/>';
+                if(str_starts_with($types[$licznik], 'int') and $ai == false){
+                    echo '<input type="number" placeholder="0" name="'.$key.'"';
+                    if($null == "NO"){
+                        echo 'required';
+                    }
+                    echo '>'.$key.'<br/>';
                 }
-                if(str_starts_with($types[$licznik], 'enum')){
+                if(str_starts_with($types[$licznik], 'varchar') and $ai == false){
+                    echo '<input type="text" placeholder="'.$value.'..." name="'.$key.'"';
+                    if($null == "NO"){
+                        echo 'required';
+                    }
+                    echo '>'.$key.'<br/>';
+                }
+                if(str_starts_with($types[$licznik], 'enum') and $ai == false){
                     $arr = explode("'",$types[$licznik]);
                     array_splice($arr,0,1);
                     array_splice($arr,count($arr)-1,1);
-                    echo '<select>';
+                    echo '<select name="'.$key.'"';
+                    if($null == "NO"){
+                        echo 'required';
+                    }    
+                    echo '>';
                     for($i = 0; $i<count($arr);$i++){
                         if($arr[$i] != ","){
-                            echo '<option>'.$arr[$i].'</option>';
+                            echo '<option value="'.$arr[$i].'">'.$arr[$i].'</option>';
                         }
                     }
                     echo '</select>'.$key.'<br/>';
                 }
                 $licznik++;
             }
-            echo '<input type="submit" value="Dodaj"><button>Anuluj</button></form></div>';
+            echo '<input type="submit" value="Dodaj" name="'.$key.'"><button>Anuluj</button></form></div>';
         }
     ?>
     <script>
-        document.querySelector("#pencil").addEventListener("click", function(){
+        document.querySelector("#plus").addEventListener("click", function(){
             if(document.querySelector(".insert_form").style.display == "none"){                
                 document.querySelector(".insert_form").style.animation = "slideInDown 0.4s ease";
                 document.querySelector(".insert_form").style.display = "block";
