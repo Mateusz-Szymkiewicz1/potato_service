@@ -25,28 +25,99 @@
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
                 ));
+                $sql = "SELECT * FROM mysql.user WHERE USER LIKE 'root';";
+                $stmt = $db->prepare($sql);
+                $stmt->execute();
+                $wiersz_user = $stmt->fetch(PDO::FETCH_ASSOC);
+                if($wiersz_user['Insert_priv']){
+                    echo '<i class="fa fa-pencil" id="pencil"></i>';
+                }
+                if($wiersz_user['Select_priv']){
                 $sql = "SELECT * FROM $tabela;";
                 $stmt = $db->prepare($sql);
                 $stmt->execute();
                 $wiersz = $stmt->fetch(PDO::FETCH_ASSOC);
                 echo '<table><tr>';
+                $types = [];
                 foreach($wiersz as $key => $value){
+                    $sql3 = "SHOW COLUMNS FROM $tabela WHERE Field = '$key'";
+                    $stmt3 = $db->prepare($sql3);
+                    $stmt3->execute();
+                    $wiersz3 = $stmt3->fetch(PDO::FETCH_ASSOC);
+                    array_push($types, $wiersz3["Type"]);
                    echo '<th>'.$key.'</th>';
                 }
                 echo '</tr>';
-                while($wiersz2 = $stmt->fetch(PDO::FETCH_ASSOC)){
+                echo "<tr>";
+                foreach($wiersz as $key => $value){
+                     echo '<td>'.$value.'</td>';
+                }
+                echo '</tr>';
+                while($wiersz = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    $wiersz2 = $wiersz;
                     echo "<tr>";
-                    foreach($wiersz2 as $key => $value){
+                    foreach($wiersz as $key => $value){
                         echo '<td>'.$value.'</td>';
                     }
                     echo '</tr>';
                 }
                 echo '</table>';
+                }else{
+                   echo '<script>'.'window.location.replace("home.php");'.'</script>';
+                    die; 
+                }
             }
             catch(Exception $e){
                 echo $e;
             }
+            function str_starts_with($haystack, $needle) {
+                return (string)$needle !== '' && strncmp($haystack, $needle, strlen($needle)) === 0;
+            }
+            $licznik = 0;
+            echo '<div class="insert_form" style="display: none;"><h2>Dodaj wiersz</h2><form action="insert.php" method="post">';
+            foreach($wiersz2 as $key => $value){
+                if(str_starts_with($types[$licznik], 'int')){
+                    echo '<input type="number" placeholder="0">'.$key.'<br/>';
+                }
+                if(str_starts_with($types[$licznik], 'varchar')){
+                    echo '<input type="text" placeholder="'.$value.'...">'.$key.'<br/>';
+                }
+                if(str_starts_with($types[$licznik], 'enum')){
+                    $arr = explode("'",$types[$licznik]);
+                    array_splice($arr,0,1);
+                    array_splice($arr,count($arr)-1,1);
+                    echo '<select>';
+                    for($i = 0; $i<count($arr);$i++){
+                        if($arr[$i] != ","){
+                            echo '<option>'.$arr[$i].'</option>';
+                        }
+                    }
+                    echo '</select>'.$key.'<br/>';
+                }
+                $licznik++;
+            }
+            echo '<input type="submit" value="Dodaj"><button>Anuluj</button></form></div>';
         }
     ?>
+    <script>
+        document.querySelector("#pencil").addEventListener("click", function(){
+            if(document.querySelector(".insert_form").style.display == "none"){                
+                document.querySelector(".insert_form").style.animation = "slideInDown 0.4s ease";
+                document.querySelector(".insert_form").style.display = "block";
+            }else{
+                document.querySelector(".insert_form").style.animation = "slideOutUp 0.4s ease";
+                setTimeout(function(){
+                    document.querySelector(".insert_form").style.display = "none";
+                }, 350)
+            }
+        })
+        document.querySelector(".insert_form button").addEventListener("click", function(e){
+            e.preventDefault();
+            document.querySelector(".insert_form").style.animation = "slideOutUp 0.4s ease";
+            setTimeout(function(){
+                document.querySelector(".insert_form").style.display = "none";
+            }, 350)
+        })
+    </script>
 </body>
 </html>

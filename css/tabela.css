@@ -7,7 +7,6 @@ body{
 }
 table{
     margin: auto;
-    margin-top: 60px;
     font-size: 25px;
     border: 1px solid #000;
     margin-bottom: 100px;
@@ -17,6 +16,7 @@ h1{
     text-align: center;
     font-size: 52px;
     margin-top: 60px;
+    margin-bottom: 80px;
 }
 td, th{
     border: 1px solid #000;
@@ -36,3 +36,53 @@ td:hover{
     top: 0px;
     left: 10px;
 }
+.insert_form{
+    position: fixed;
+    top: 50px;
+    left: 35%;
+    right: 35%;
+    max-height: 80%;
+    background: #eee;
+    border: 1px solid #000;
+    text-align: center;
+    padding-bottom: 50px;
+    font-size: 25px;
+    overflow-y: scroll;
+}
+.insert_form > h2{
+    margin-top: 50px;
+    font-size: 42px;
+}
+.insert_form  input{
+    outline: 0;
+    padding: 5px;
+    margin: 10px;
+}
+.insert_form  select{
+    outline: 0;
+    padding: 5px;
+    margin: 10px;
+}
+#pencil{
+    font-size: 30px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.insert_form button, .insert_form input[type=submit]{
+    background: transparent;
+    border: 1px solid #666;
+    padding: 12px;
+    width: 100px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+.insert_form input[type=submit]:hover{
+    background: #2ecc71;
+    color: #fff;
+}
+.insert_form button:hover{
+    background: #e74c3c;
+    color: #fff;
+}
+@-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}
+@-webkit-keyframes slideOutUp{0%{-webkit-transform:translateZ(0);transform:translateZ(0)}to{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:hidden}}
