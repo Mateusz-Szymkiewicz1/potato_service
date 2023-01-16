@@ -84,5 +84,24 @@ td:hover{
     background: #e74c3c;
     color: #fff;
 }
+.insert_response{
+    position: fixed;
+    top: 150px;
+    left: 33%;
+    right: 33%;
+   height: 110px;
+    background: #eee;
+    border: 1px solid #000;
+    text-align: center;
+    padding-top: 60px;
+    font-size: 30px;
+    font-weight: 900;
+    text-decoration: underline;
+    text-decoration-color: #2ecc71;
+    cursor: pointer;
+}
+.insert_error{
+     text-decoration-color: #e74c3c;
+}
 @-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}
 @-webkit-keyframes slideOutUp{0%{-webkit-transform:translateZ(0);transform:translateZ(0)}to{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:hidden}}

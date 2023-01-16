@@ -11,6 +11,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+ <?php
+    $insert_status = $_GET['insert_status'] ?? null;
+    $insert_error = $_GET['insert_error'] ?? null;
+    if($insert_status != null){
+        echo '<div class="insert_response">Zapytania INSERT zakończone pomyślnie ;)</div>';
+    }
+    if($insert_error != null){
+        switch($insert_error){
+            case 1452:
+                $error_message = "Wprowadzone klucze obce są niepoprawne!";
+                break;
+            case 1049:
+                $error_message = "Nie udało się połączyć z bazą danych!";
+                break;
+            case 1045:
+                $error_message = "Nie przyznano dostępu użytkownikowi!";
+                break;
+            default:
+                $error_message = "Nieprzewidziany błąd!";
+                break;
+        }
+        echo '<div class="insert_response insert_error">'.$insert_error.' - '.$error_message.'</div>';
+    }
+    ?>
   <a href="home.php"><img src="images/back.png" height="60px" width="50px" class="arrow"></a>
    <h1>Tabela - <?=$_GET['name']?></h1>
     <?php
@@ -90,7 +114,7 @@
                     $ai = true;
                 }
                 if(str_starts_with($types[$licznik], 'int') and $ai == false){
-                    echo '<input type="number" placeholder="0" name="'.$key.'"';
+                    echo '<input type="number" placeholder="0" name="'.$key.'" value="0"';
                     if($null == "NO"){
                         echo 'required';
                     }
@@ -121,7 +145,7 @@
                 }
                 $licznik++;
             }
-            echo '<input type="submit" value="Dodaj" name="'.$key.'"><button>Anuluj</button></form></div>';
+            echo '<input type="submit" value="Dodaj"><button>Anuluj</button></form></div>';
         }
     ?>
     <script>
@@ -142,6 +166,22 @@
             setTimeout(function(){
                 document.querySelector(".insert_form").style.display = "none";
             }, 350)
+        })
+        document.querySelector("#plus").style.display = "none";
+        setTimeout(function(){
+            var left = document.querySelector("table").offsetLeft-50;
+            document.querySelector("#plus").style.marginLeft = left+"px";  
+            document.querySelector("#plus").style.display = "block";
+        },100) 
+        window.addEventListener("resize", function(){
+            var left = document.querySelector("table").offsetLeft-50;
+            document.querySelector("#plus").style.marginLeft = left+"px";  
+            document.querySelector("#plus").style.display = "block";
+        })
+        document.querySelector(".insert_response").addEventListener("click", function(){
+            if(document.querySelector(".insert_response")){
+                document.querySelector(".insert_response").style.display = "none";
+            }
         })
     </script>
 </body>
