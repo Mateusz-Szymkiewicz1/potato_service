@@ -67,6 +67,7 @@ td:hover{
     font-size: 30px;
     margin-bottom: 10px;
     cursor: pointer;
+    width: 30px;
 }
 .insert_form button, .insert_form input[type=submit]{
     background: transparent;
@@ -102,6 +103,14 @@ td:hover{
 }
 .insert_error{
      text-decoration-color: #e74c3c;
+}
+.foreign_key{
+    text-shadow: 0 0 3px #000;
+    color: silver;
+}
+.primary_key{
+    text-shadow: 0 0 3px #000;
+    color: gold;
 }
 @-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}
 @-webkit-keyframes slideOutUp{0%{-webkit-transform:translateZ(0);transform:translateZ(0)}to{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:hidden}}

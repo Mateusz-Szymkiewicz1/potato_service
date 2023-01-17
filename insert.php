@@ -4,10 +4,24 @@ $tabela = $_POST['tabela'];
 $kolumny = "";
 $dane = "";
 foreach ($_POST as $key => $value){
-    if($key != "tabela" and $value != "Dodaj"){
+    if($key != "tabela"){
+        if(substr($key, -3) == "num"){
+          if($value == ""){
+              $key2 = substr($key, 0, -3);
+              $kolumny = $kolumny.$key2.",";
+              $dane = $dane."null".',';
+              continue;
+          }else{
+              $key2 = substr($key, 0, -3);
+              $kolumny = $kolumny.$key2.",";
+              $number = intval($value);
+              $dane = $dane.$number.',';
+              continue;  
+          }
+        }
         if($value == ""){
-            $kolumny = $kolumny.$key.",";
-            $dane = $dane.'""'.',';
+                $kolumny = $kolumny.$key.",";
+                $dane = $dane.'""'.',';
         }else{
             if(is_numeric($value)){
             $kolumny = $kolumny.$key.",";
@@ -21,6 +35,8 @@ foreach ($_POST as $key => $value){
 }
 $kolumny = rtrim($kolumny, ",");
 $dane = rtrim($dane, ",");
+echo $kolumny.'<br/>';
+echo $dane.'<br/>';
 try{
     $db = new PDO("mysql:host=localhost;dbname=baza_testowa", $_SESSION['login'], $_SESSION['haslo'],array(
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

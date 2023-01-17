@@ -13,6 +13,9 @@
     <title>Potato Service</title>
 </head>
 <body>
+   <div class="preloader">
+       <img src="images/loading.gif" width="200px" height="200px">
+   </div>
     <div class="login-form">
         <form method="post" action="login.php">
            <h1>Potato Service</h1>
@@ -77,6 +80,7 @@
                     gltf.scene.scale.y = 0.5;
                     gltf.scene.scale.z = 0.5;
                     requestAnimationFrame(render);
+                    end_loading();
                 },
                 function(xhr) {},
                 function(error) {
@@ -92,6 +96,9 @@
             }
         }
         main();
+        function end_loading(){
+            document.querySelector(".preloader").style.display = "none";
+        }
     </script>
 </body>
 

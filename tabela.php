@@ -15,7 +15,7 @@
     $insert_status = $_GET['insert_status'] ?? null;
     $insert_error = $_GET['insert_error'] ?? null;
     if($insert_status != null){
-        echo '<div class="insert_response">Zapytania INSERT zakończone pomyślnie ;)</div>';
+        echo '<div class="insert_response">Zapytanie INSERT zakończone pomyślnie ;)</div>';
     }
     if($insert_error != null){
         switch($insert_error){
@@ -70,7 +70,14 @@
                     $stmt3->execute();
                     $wiersz3 = $stmt3->fetch(PDO::FETCH_ASSOC);
                     array_push($types, $wiersz3["Type"]);
-                   echo '<th>'.$key.'</th>';
+                   echo '<th>'.$key;
+                    if($wiersz3['Key'] == "MUL" or $wiersz3['Key'] == "UNI"){
+                        echo '&nbsp&nbsp<i class="fa fa-key foreign_key"></i>';
+                    }
+                    if($wiersz3['Key'] == "PRI"){
+                        echo '&nbsp&nbsp<i class="fa fa-key primary_key"></i>';
+                    }
+                    echo '</th>';
                 }
                 echo '</tr>';
                 echo "<tr>";
@@ -114,7 +121,7 @@
                     $ai = true;
                 }
                 if(str_starts_with($types[$licznik], 'int') and $ai == false){
-                    echo '<input type="number" placeholder="0" name="'.$key.'" value="0"';
+                    echo '<input type="number" placeholder="0" name="'.$key.'num"';
                     if($null == "NO"){
                         echo 'required';
                     }
