@@ -40,6 +40,7 @@
     <?php
     session_start();
         $tabela = $_GET['name'] ?? null;
+        echo '<script>window.tabela = "'.$tabela.'"</script>';
         if($tabela == null or !$_SESSION['login']){
             echo '<script>'.'window.location.replace("home.php");'.'</script>';
             die;
@@ -58,7 +59,13 @@
                     echo '<i class="fa fa-plus" id="plus"></i>';
                 }
                 if($wiersz_user['Select_priv']){
-                $sql = "SELECT * FROM $tabela;";
+                $sql_count = "SELECT COUNT(*) FROM $tabela;";
+                $stmt_count = $db->prepare($sql_count);
+                $stmt_count->execute();
+                $wiersz_count = $stmt_count->fetch(PDO::FETCH_ASSOC);
+                $rows_num = $wiersz_count["COUNT(*)"];
+                echo '<script>window.rows_num = '.$rows_num.'</script>';
+                $sql = "SELECT * FROM $tabela LIMIT 50;";
                 $stmt = $db->prepare($sql);
                 $stmt->execute();
                 $wiersz = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -94,6 +101,9 @@
                     echo '</tr>';
                 }
                 echo '</table>';
+                if($rows_num > 50){
+                    echo '<button class="more_btn">Pokaż więcej</button>';
+                }
                 }else{
                    echo '<script>'.'window.location.replace("home.php");'.'</script>';
                     die; 
@@ -156,6 +166,7 @@
         }
     ?>
     <script>
+        window.limit = 50;
         document.querySelector("#plus").addEventListener("click", function(){
             if(document.querySelector(".insert_form").style.display == "none"){                
                 document.querySelector(".insert_form").style.animation = "slideInDown 0.4s ease";
@@ -185,9 +196,40 @@
             document.querySelector("#plus").style.marginLeft = left+"px";  
             document.querySelector("#plus").style.display = "block";
         })
-        document.querySelector(".insert_response").addEventListener("click", function(){
-            if(document.querySelector(".insert_response")){
-                document.querySelector(".insert_response").style.display = "none";
+        if(document.querySelector(".insert_response")){
+            document.querySelector(".insert_response").addEventListener("click", function(){
+                if(document.querySelector(".insert_response")){
+                    document.querySelector(".insert_response").style.display = "none";
+                }
+            })
+        }
+        document.querySelector(".more_btn").addEventListener("click", function(){
+            if(window.limit < window.rows_num){
+                window.limit += 50;
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.onreadystatechange = function() { 
+                    if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                        let response_array = JSON.parse(this.response);
+                        response_array.forEach(row => {
+                           let tr = document.createElement("tr");
+                           for(i in row){
+                               let td = document.createElement("td");
+                               td.innerText = row[i];
+                               tr.appendChild(td);
+                           }
+                            document.querySelector("tbody").appendChild(tr);
+                            var left = document.querySelector("table").offsetLeft-50;
+                            document.querySelector("#plus").style.marginLeft = left+"px";  
+                            document.querySelector("#plus").style.display = "block";
+                        })
+                    }
+                }
+                let last_id = document.querySelector("table tr:last-of-type td:first-of-type").innerText;
+                xmlHttp.open("GET", `get_more_rows.php?tabela=${window.tabela}&last_id=${last_id}`, true);
+                xmlHttp.send(null);
+                if(window.limit >= window.rows_num){
+                    document.querySelector(".more_btn").remove();
+                }
             }
         })
     </script>

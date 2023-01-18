@@ -9,7 +9,26 @@ table{
     margin: auto;
     font-size: 25px;
     border: 1px solid #000;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
+    background: #eed996;
+}
+.more_btn{
+    display: block;
+    margin: auto;
+    margin-bottom: 80px;
+    height: 60px;
+    width: 150px;
+    cursor: pointer;
+    background: #bba774;
+    outline: none;
+    border: 1px solid #eed996;
+    transition: 0.4s;
+    font-size: 23px;
+    font-family: 'Sofia Sans Extra Condensed';
+    font-weight: 900;
+    color: #fff;
+}
+.more_btn:hover{
     background: #eed996;
 }
 h1{
