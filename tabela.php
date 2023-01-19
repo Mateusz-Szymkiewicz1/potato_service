@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
- <?php
+    <?php
     $insert_status = $_GET['insert_status'] ?? null;
     $insert_error = $_GET['insert_error'] ?? null;
     if($insert_status != null){
@@ -35,8 +35,8 @@
         echo '<div class="insert_response insert_error">'.$insert_error.' - '.$error_message.'</div>';
     }
     ?>
-  <a href="home.php"><img src="images/back.png" height="60px" width="50px" class="arrow"></a>
-   <h1>Tabela - <?=$_GET['name']?></h1>
+    <a href="home.php" draggable="false"><img draggable="false" src="images/back.png" height="60px" width="50px" class="arrow"></a>
+    <h1>Tabela - <?=$_GET['name']?></h1>
     <?php
     session_start();
         $tabela = $_GET['name'] ?? null;
@@ -102,7 +102,7 @@
                 }
                 echo '</table>';
                 if($rows_num > 50){
-                    echo '<button class="more_btn">Pokaż więcej</button>';
+                    echo '<div class="button_wrapper"><button class="more_btn" id="more_btn">Pokaż więcej</button><button class="more_btn" id="all_btn">Pokaż wszystko</button></div>';
                 }
                 }else{
                    echo '<script>'.'window.location.replace("home.php");'.'</script>';
@@ -167,68 +167,76 @@
     ?>
     <script>
         window.limit = 50;
-        document.querySelector("#plus").addEventListener("click", function(){
-            if(document.querySelector(".insert_form").style.display == "none"){                
+        document.querySelector("#plus").addEventListener("click", function() {
+            if (document.querySelector(".insert_form").style.display == "none") {
                 document.querySelector(".insert_form").style.animation = "slideInDown 0.4s ease";
                 document.querySelector(".insert_form").style.display = "block";
-            }else{
+            } else {
                 document.querySelector(".insert_form").style.animation = "slideOutUp 0.4s ease";
-                setTimeout(function(){
+                setTimeout(function() {
                     document.querySelector(".insert_form").style.display = "none";
                 }, 350)
             }
         })
-        document.querySelector(".insert_form button").addEventListener("click", function(e){
+        document.querySelector(".insert_form button").addEventListener("click", function(e) {
             e.preventDefault();
             document.querySelector(".insert_form").style.animation = "slideOutUp 0.4s ease";
-            setTimeout(function(){
+            setTimeout(function() {
                 document.querySelector(".insert_form").style.display = "none";
             }, 350)
         })
         document.querySelector("#plus").style.display = "none";
-        setTimeout(function(){
-            var left = document.querySelector("table").offsetLeft-50;
-            document.querySelector("#plus").style.marginLeft = left+"px";  
+        setTimeout(function() {
+            var left = document.querySelector("table").offsetLeft - 50;
+            document.querySelector("#plus").style.marginLeft = left + "px";
             document.querySelector("#plus").style.display = "block";
-        },100) 
-        window.addEventListener("resize", function(){
-            var left = document.querySelector("table").offsetLeft-50;
-            document.querySelector("#plus").style.marginLeft = left+"px";  
+        }, 100)
+        window.addEventListener("resize", function() {
+            var left = document.querySelector("table").offsetLeft - 50;
+            document.querySelector("#plus").style.marginLeft = left + "px";
             document.querySelector("#plus").style.display = "block";
         })
-        if(document.querySelector(".insert_response")){
-            document.querySelector(".insert_response").addEventListener("click", function(){
-                if(document.querySelector(".insert_response")){
+        if (document.querySelector(".insert_response")) {
+            document.querySelector(".insert_response").addEventListener("click", function() {
+                if (document.querySelector(".insert_response")) {
                     document.querySelector(".insert_response").style.display = "none";
                 }
             })
         }
-        document.querySelector(".more_btn").addEventListener("click", function(){
-            if(window.limit < window.rows_num){
-                window.limit += 50;
+        document.addEventListener("click", function(e) {
+            if (e.target.className == "more_btn") {
+                let show_type;
+                if (e.target.id == "more_btn") {
+                    window.limit += 50;
+                    show_type = "more";
+                } else {
+                    window.limit = window.rows_num;
+                    show_type = "all";
+                }
                 var xmlHttp = new XMLHttpRequest();
-                xmlHttp.onreadystatechange = function() { 
-                    if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                xmlHttp.onreadystatechange = function() {
+                    if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
                         let response_array = JSON.parse(this.response);
                         response_array.forEach(row => {
-                           let tr = document.createElement("tr");
-                           for(i in row){
-                               let td = document.createElement("td");
-                               td.innerText = row[i];
-                               tr.appendChild(td);
-                           }
+                            let tr = document.createElement("tr");
+                            for (i in row) {
+                                let td = document.createElement("td");
+                                td.innerText = row[i];
+                                tr.appendChild(td);
+                            }
                             document.querySelector("tbody").appendChild(tr);
-                            var left = document.querySelector("table").offsetLeft-50;
-                            document.querySelector("#plus").style.marginLeft = left+"px";  
+                            var left = document.querySelector("table").offsetLeft - 50;
+                            document.querySelector("#plus").style.marginLeft = left + "px";
                             document.querySelector("#plus").style.display = "block";
                         })
                     }
                 }
                 let last_id = document.querySelector("table tr:last-of-type td:first-of-type").innerText;
-                xmlHttp.open("GET", `get_more_rows.php?tabela=${window.tabela}&last_id=${last_id}`, true);
+                xmlHttp.open("GET", `get_more_rows.php?tabela=${window.tabela}&last_id=${last_id}&type=${show_type}`, true);
                 xmlHttp.send(null);
-                if(window.limit >= window.rows_num){
-                    document.querySelector(".more_btn").remove();
+                if (window.limit >= window.rows_num) {
+                    document.querySelector("#more_btn").remove();
+                    document.querySelector("#all_btn").remove();
                 }
             }
         })

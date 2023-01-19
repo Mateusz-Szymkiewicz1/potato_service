@@ -6,9 +6,14 @@ PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
 ));
 $tabela = $_GET['tabela'] ?? null;
 $last_id = $_GET['last_id'] ?? null;
+$type = $_GET['type'] ?? null;
 $login = $_SESSION['login'];
-if($last_id != null && $tabela != null){
-    $sql = "SELECT * FROM $tabela WHERE id > $last_id LIMIT 50;";
+if($last_id != null && $tabela != null && $type != null){
+    if($type == "more"){
+        $sql = "SELECT * FROM $tabela WHERE id > $last_id LIMIT 50;";
+    }else{
+       $sql = "SELECT * FROM $tabela WHERE id > $last_id;";
+    }
     $stmt = $db->prepare($sql);
     $stmt->execute();
     $array = [];

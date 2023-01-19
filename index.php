@@ -13,13 +13,13 @@
     <title>Potato Service</title>
 </head>
 <body>
-   <div class="preloader">
-       <img src="images/loading.gif" width="200px" height="200px">
-   </div>
+    <div class="preloader">
+        <img src="images/loading.gif" width="200px" height="200px">
+    </div>
     <div class="login-form">
         <form method="post" action="login.php">
-           <h1>Potato Service</h1>
-           <?php
+            <h1>Potato Service</h1>
+            <?php
             session_start();
             session_destroy();
                 $error = $_GET['error_code'] ?? null;
@@ -45,13 +45,20 @@
     <canvas id="c"></canvas>
     <script type="module">
         // import biblioteki three.js
-        import {GLTFLoader} from 'https://unpkg.com/three@0.119.1/examples/jsm/loaders/GLTFLoader.js';
-        import {OrbitControls} from 'https://unpkg.com/three@0.119.1/examples/jsm/controls/OrbitControls.js';
+        import {
+            GLTFLoader
+        } from 'https://unpkg.com/three@0.119.1/examples/jsm/loaders/GLTFLoader.js';
+        import {
+            OrbitControls
+        } from 'https://unpkg.com/three@0.119.1/examples/jsm/controls/OrbitControls.js';
         import * as THREE from 'https://unpkg.com/three@0.119.1/build/three.module.js';
-
+        
         function main() {
             const canvas = document.querySelector('#c');
-            const renderer = new THREE.WebGLRenderer({canvas,alpha: true});
+            const renderer = new THREE.WebGLRenderer({
+                canvas,
+                alpha: true
+            });
             const fov = 50;
             const aspect = 1;
             const near = 0.1;
@@ -96,7 +103,7 @@
             }
         }
         main();
-        function end_loading(){
+        function end_loading() {
             document.querySelector(".preloader").style.display = "none";
         }
     </script>

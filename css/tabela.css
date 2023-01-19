@@ -5,6 +5,10 @@ body{
     padding-right: 50px;
     padding-left: 50px;
 }
+::selection {
+  color: #fff;
+  background: #eed996;
+}
 table{
     margin: auto;
     font-size: 25px;
@@ -14,7 +18,7 @@ table{
 }
 .more_btn{
     display: block;
-    margin: auto;
+    float: left;
     margin-bottom: 80px;
     height: 60px;
     width: 150px;
@@ -30,6 +34,13 @@ table{
 }
 .more_btn:hover{
     background: #eed996;
+}
+#more_btn{
+    margin-right: 20px;
+}
+.button_wrapper{
+    width: 320px;
+    margin: auto;
 }
 h1{
     text-align: center;
