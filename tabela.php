@@ -14,10 +14,10 @@
     <?php
     $insert_status = $_GET['insert_status'] ?? null;
     $insert_error = $_GET['insert_error'] ?? null;
-    if($insert_status != null){
+    if($insert_status){
         echo '<div class="insert_response">Zapytanie INSERT zakończone pomyślnie ;)</div>';
     }
-    if($insert_error != null){
+    if($insert_error){
         switch($insert_error){
             case 1452:
                 $error_message = "Wprowadzone klucze obce są niepoprawne!";
@@ -41,7 +41,7 @@
     session_start();
         $tabela = $_GET['name'] ?? null;
         echo '<script>window.tabela = "'.$tabela.'"</script>';
-        if($tabela == null or !$_SESSION['login']){
+        if(!$tabela or !$_SESSION['login']){
             echo '<script>'.'window.location.replace("home.php");'.'</script>';
             die;
         }else{
@@ -58,6 +58,9 @@
                 if($wiersz_user['Insert_priv']){
                     echo '<i class="fa fa-plus" id="plus"></i>';
                 }
+                if($wiersz_user['Alter_priv']){
+                    echo '<a href="struktura.php?name='.$tabela.'"><i class="fa fa-table" id="struktura"></i></a>';
+                }
                 if($wiersz_user['Select_priv']){
                 $sql_count = "SELECT COUNT(*) FROM $tabela;";
                 $stmt_count = $db->prepare($sql_count);
@@ -69,7 +72,7 @@
                 $stmt = $db->prepare($sql);
                 $stmt->execute();
                 $wiersz = $stmt->fetch(PDO::FETCH_ASSOC);
-                echo '<table><tr>';
+                echo '<br/><br/><br/><table><tr>';
                 $types = [];
                 foreach($wiersz as $key => $value){
                     $sql3 = "SHOW COLUMNS FROM $tabela WHERE Field = '$key'";

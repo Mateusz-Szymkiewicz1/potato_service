@@ -15,6 +15,7 @@ table{
     border: 1px solid #000;
     margin-bottom: 50px;
     background: #eed996;
+    margin-top: -15px;
 }
 .more_btn{
     display: block;
@@ -93,11 +94,17 @@ td:hover{
     padding: 5px;
     margin: 10px;
 }
-#plus{
+#plus, #struktura{
     font-size: 30px;
     margin-bottom: 10px;
     cursor: pointer;
     width: 30px;
+    float: left;
+    margin-right: 15px;
+}
+#struktura{
+    padding-top: 1px;
+    color: #000;
 }
 .insert_form button, .insert_form input[type=submit]{
     background: transparent;

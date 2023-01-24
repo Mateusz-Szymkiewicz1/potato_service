@@ -8,7 +8,7 @@ $tabela = $_GET['tabela'] ?? null;
 $last_id = $_GET['last_id'] ?? null;
 $type = $_GET['type'] ?? null;
 $login = $_SESSION['login'];
-if($last_id != null && $tabela != null && $type != null){
+if($last_id && $tabela && $type){
     if($type == "more"){
         $sql = "SELECT * FROM $tabela WHERE id > $last_id LIMIT 50;";
     }else{
