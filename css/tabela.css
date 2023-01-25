@@ -94,7 +94,7 @@ td:hover{
     padding: 5px;
     margin: 10px;
 }
-#plus, #struktura{
+#plus, #struktura, #pencil{
     font-size: 30px;
     margin-bottom: 10px;
     cursor: pointer;
@@ -148,6 +148,9 @@ td:hover{
 .primary_key{
     text-shadow: 0 0 3px #000;
     color: gold;
+}
+input[type=checkbox]{
+    cursor: pointer;
 }
 @-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}
 @-webkit-keyframes slideOutUp{0%{-webkit-transform:translateZ(0);transform:translateZ(0)}to{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:hidden}}
