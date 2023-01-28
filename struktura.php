@@ -14,12 +14,37 @@
             padding-bottom: 0;
             margin-bottom: 0;
         }
+        .insert_form{
+            min-width: 370px;
+        }
     </style>
 </head>
 <body>
     <a href="tabela.php?name=<?=$_GET['name']?>" draggable="false"><img draggable="false" src="images/back.png" height="60px" width="50px" class="arrow"></a>
     <h1>Struktura - <?=$_GET['name']?></h1>
     <?php
+    $add_column_error = $_GET['add_column_error'] ?? null;
+    $add_column_info = $_GET['add_column_info'] ?? null;
+    if($add_column_error){
+        switch($add_column_error){
+            case 1062:
+                $err_desc = "Klucz unikalny nie może się powtarzać!";
+                break;
+            case 1068:
+                $err_desc = "Może istnieć tylko jeden klucz główny!";
+                break;
+            case 1075:
+                $err_desc = "Może istnieć tylko jedna kolumna z inkrementacją (i musi być ona kluczem)!";
+                break;
+            default:
+                $err_desc = "Nieprzewidziany błąd!";
+                break;
+        }
+        echo '<div class="insert_response insert_error">'.$add_column_error." - ".$err_desc.'</div>';
+    }
+    if($add_column_info){
+        echo '<div class="insert_response">Pomyślnie dodano kolumnę!</div>';
+    }
     function str_contains($haystack, $needle) {
                 return $needle !== '' && mb_strpos($haystack, $needle) !== false;
     }
@@ -82,8 +107,8 @@
     ?>
     <div class="insert_form" style="display: none;">
         <h2>Dodaj pole</h2>
-        <form action="insert.php" method="post">
-            <input type="text" value="'.$tabela.'" name="tabela" hidden>
+        <form action="add_column.php" method="post">
+            <input type="text" value="<?=$tabela?>" name="tabela" hidden>
             <label>Nazwa</label><input type="text" name="new_nazwa" required><br/>
             <label>Typ</label><select name="new_typ">
                 <option value="int">INT</option>
@@ -92,12 +117,13 @@
                 <option value="date">DATE</option>
             </select><br/>
             <label>Długość/Wartości</label><input type="text" name="new_dlugosc"><br/>
-            <label>Domyślnie</label><select name="new_default">
+            <label>Domyślnie</label><select name="new_default" id="new_default">
+                <option value="none">...</option>
                 <option value="null">NULL</option>
-                <option value="null">Current_timestamp</option>
-                <option value="null">Zdefiniuj</option>
+                <option value="timestamp">Current_timestamp</option>
+                <option value="defined">Zdefiniuj</option>
             </select>
-            <input type="text" name="new_defined_default" hidden><br/>
+            <input type="text" name="new_defined_default" id="new_defined_default" hidden><br/>
             <label>NULL</label><input type="checkbox" name="new_null"><br/>
             <label>Indeks</label><select name="new_index">
                 <option value="">...</option>
@@ -105,7 +131,18 @@
                 <option value="UNI">UNIQUE</option>
             </select><br/>
             <label>AI</label><input type="checkbox" name="new_ai"><br/>
-            <label>Komentarze</label><input type="text" name="new_comments">
+            <label>Po</label><select name="new_after">
+               <option value="">...</option>
+                <?php
+                    $sql = "SELECT * FROM $tabela LIMIT 1;";
+                    $stmt = $db->prepare($sql);
+                    $stmt->execute();
+                    $wiersz = $stmt->fetch(PDO::FETCH_ASSOC);
+                    foreach($wiersz as $key => $value){
+                        echo '<option value="'.$key.'">'.$key.'</option>';
+                    }
+                ?>
+            </select><br />
             <input type="submit"><button>Anuluj</button>
         </form>
     </div>
@@ -139,6 +176,20 @@
                 document.querySelector(".insert_form").style.display = "none";
             }, 350)
         })
+        document.querySelector("#new_default").addEventListener("change", function(e){
+            if(e.target.value == "defined"){
+                document.querySelector("#new_defined_default").removeAttribute("hidden");
+            }else{
+                document.querySelector("#new_defined_default").hidden = "true";
+            }
+        })
+         if (document.querySelector(".insert_response")) {
+            document.querySelector(".insert_response").addEventListener("click", function() {
+                if (document.querySelector(".insert_response")) {
+                    document.querySelector(".insert_response").style.display = "none";
+                }
+            })
+        }
     </script>
 </body>
 </html>

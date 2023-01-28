@@ -73,6 +73,7 @@ td:hover{
     left: 35%;
     right: 35%;
     max-height: 80%;
+    min-width: 300px;
     background: #eee;
     border: 1px solid #000;
     text-align: center;
@@ -127,16 +128,18 @@ td:hover{
     top: 150px;
     left: 33%;
     right: 33%;
-   height: 110px;
+   height: 115px;
     background: #eee;
     border: 1px solid #000;
     text-align: center;
-    padding-top: 60px;
+    padding-top: 55px;
     font-size: 30px;
     font-weight: 900;
     text-decoration: underline;
     text-decoration-color: #2ecc71;
     cursor: pointer;
+    padding-left: 10px;
+    padding-right; 10px;
 }
 .insert_error{
      text-decoration-color: #e74c3c;
