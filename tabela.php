@@ -243,6 +243,15 @@
                 }
             }
         })
+        document.querySelectorAll("td").forEach(td => {
+            td.addEventListener("click", function(){
+                if(td.parentElement.className == "tr_focused"){
+                    td.parentElement.removeAttribute("class");
+                }else{
+                    td.parentElement.classList.add("tr_focused");
+                }
+            })
+        })
     </script>
 </body>
 </html>

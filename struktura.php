@@ -21,7 +21,7 @@
 </head>
 <body>
     <a href="tabela.php?name=<?=$_GET['name']?>" draggable="false"><img draggable="false" src="images/back.png" height="60px" width="50px" class="arrow"></a>
-    <h1>Struktura - <?=$_GET['name']?></h1>
+    <h1>Struktura - <?=$_GET['name']?><br/><span class="error"></span></h1>
     <?php
     $add_column_error = $_GET['add_column_error'] ?? null;
     $add_column_info = $_GET['add_column_info'] ?? null;
@@ -146,6 +146,35 @@
             <input type="submit"><button>Anuluj</button>
         </form>
     </div>
+    <div class="update_form insert_form" style="display: none;">
+        <h2>Edytuj pole</h2>
+        <form action="edit_column.php" method="post">
+            <input type="text" value="<?=$tabela?>" name="tabela" hidden>
+            <label>Nazwa</label><input type="text" name="updated_nazwa" id="updated_nazwa" required><br/>
+            <label>Typ</label><select name="updated_typ" id="updated_typ">
+                <option value="int">INT</option>
+                <option value="varchar">VARCHAR</option>
+                <option value="text">TEXT</option>
+                <option value="date">DATE</option>
+            </select><br/>
+            <label>Długość/Wartości</label><input type="text" name="updated_dlugosc" id="updated_dlugosc"><br/>
+            <label>Domyślnie</label><select name="new_default" id="updated_default">
+                <option value="none">...</option>
+                <option value="null">NULL</option>
+                <option value="timestamp">Current_timestamp</option>
+                <option value="defined">Zdefiniuj</option>
+            </select>
+            <input type="text" name="updated_defined_default" id="updated_defined_default" hidden><br/>
+            <label>NULL</label><input type="checkbox" name="updated_null" id="updated_null"><br/>
+            <label>Indeks</label><select name="updated_index" id="updated_index">
+                <option value="">...</option>
+                <option value="PRI">PRIMARY</option>
+                <option value="UNI">UNIQUE</option>
+            </select><br/>
+            <label>AI</label><input type="checkbox" name="updated_ai" id="updated_ai"><br/>
+            <input type="submit"><button>Anuluj</button>
+        </form>
+    </div>
     <script>
         document.querySelector("#plus").style.display = "none";
         setTimeout(function() {
@@ -190,6 +219,77 @@
                 }
             })
         }
+        document.querySelectorAll("td").forEach(td => {
+            td.addEventListener("click", function(){
+                if(td.parentElement.className == "tr_focused"){
+                    td.parentElement.removeAttribute("class");
+                }else{
+                    td.parentElement.classList.add("tr_focused");
+                }
+            })
+        })
+         document.querySelector(".update_form button").addEventListener("click", function(e) {
+            e.preventDefault();
+            document.querySelector(".update_form").style.animation = "slideOutUp 0.4s ease";
+            setTimeout(function() {
+                document.querySelector(".update_form").style.display = "none";
+            }, 350)
+        })
+        document.querySelector("#updated_default").addEventListener("change", function(e){
+            if(e.target.value == "defined"){
+                document.querySelector("#updated_defined_default").removeAttribute("hidden");
+            }else{
+                document.querySelector("#updated_defined_default").hidden = "true";
+            }
+        })
+         document.querySelector("#pencil").addEventListener("click", function() {
+            if (document.querySelector(".update_form").style.display == "none") {
+                let focused = document.querySelectorAll(".tr_focused").length;
+                if(focused == 1){
+                    let column = document.querySelector(".tr_focused");
+                    document.querySelector(".update_form").style.animation = "slideInDown 0.4s ease";
+                    document.querySelector(".update_form").style.display = "block";
+                    document.querySelector("h1 span").innerHTML = ``;
+                    document.querySelector("#updated_nazwa").value = column.querySelector("td").innerText.trim();
+                    document.querySelector("#updated_typ").value = column.querySelector("td:nth-child(2)").innerText.trim().split("(")[0];
+                    document.querySelector("#updated_dlugosc").value = column.querySelector("td:nth-child(2)").innerText.trim().split("(")[1].split(")")[0];
+                    if(column.querySelector("td:nth-child(3)").innerText == "YES"){
+                        document.querySelector("#updated_null").checked = true;
+                    }else{
+                        document.querySelector("#updated_null").checked = false;
+                    }
+                    if(column.querySelector("td:nth-child(4)").innerText == "null"){
+                        document.querySelector("#updated_default").value = "null";
+                    }else if(column.querySelector("td:nth-child(4)").innerText == "current_timestamp"){
+                        document.querySelector("#updated_default").value = "timestamp";
+                    }else{
+                        document.querySelector("#updated_defined_default").removeAttribute("hidden");
+                        document.querySelector("#updated_defined_default").value = column.querySelector("td:nth-child(4)").innerText;
+                    }
+                    if(column.querySelector("td:nth-child(5").innerText.includes("auto_increment")){
+                        document.querySelector("#updated_ai").checked = true;
+                    }else{
+                        document.querySelector("#updated_ai").checked = false;
+                    }
+                    if(column.querySelector("td .primary_key")){
+                        document.querySelector("#updated_index").value = "PRI";
+                    }else if(column.querySelector("td .foreign_key")){
+                        document.querySelector("#updated_index").value = "UNI";
+                    }else{
+                        document.querySelector("#updated_index").value = "";
+                    }
+                }else if(focused == 0){
+                    document.querySelector("h1 span").innerHTML = `Zaznacz pole do edycji!`;
+                }else{
+                    document.querySelector("h1 span").innerHTML = `Zaznacz tylko jedno pole!`;
+                }
+            }else{
+                document.querySelector(".update_form").style.animation = "slideOutUp 0.4s ease";
+                setTimeout(function() {
+                    document.querySelector(".update_form").style.display = "none";
+                }, 350)
+            }
+        })
     </script>
 </body>
 </html>
