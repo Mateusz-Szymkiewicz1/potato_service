@@ -35,8 +35,6 @@ foreach ($_POST as $key => $value){
 }
 $kolumny = rtrim($kolumny, ",");
 $dane = rtrim($dane, ",");
-echo $kolumny.'<br/>';
-echo $dane.'<br/>';
 try{
     $db = new PDO("mysql:host=localhost;dbname=baza_testowa", $_SESSION['login'], $_SESSION['haslo'],array(
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

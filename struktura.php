@@ -24,7 +24,7 @@
     <h1>Struktura - <?=$_GET['name']?><br/><span class="error"></span></h1>
     <?php
     $add_column_error = $_GET['add_column_error'] ?? null;
-    $add_column_info = $_GET['add_column_info'] ?? null;
+    $operation_info = $_GET['add_column_info'] ?? null;
     if($add_column_error){
         switch($add_column_error){
             case 1062:
@@ -42,8 +42,14 @@
         }
         echo '<div class="insert_response insert_error">'.$add_column_error." - ".$err_desc.'</div>';
     }
-    if($add_column_info){
+    if($operation_info == 1){
         echo '<div class="insert_response">Pomyślnie dodano kolumnę!</div>';
+    }
+    if($operation_info == 2){
+        echo '<div class="insert_response">Pomyślnie edytowano kolumnę!</div>';
+    }
+    if($operation_info == 3){
+        echo '<div class="insert_response">Pomyślnie usunięto kolumny!</div>';
     }
     function str_contains($haystack, $needle) {
                 return $needle !== '' && mb_strpos($haystack, $needle) !== false;
@@ -69,6 +75,7 @@
                 }
                 echo '<i class="fa fa-plus" id="plus"></i>';
                 echo '<i class="fa fa-pencil" id="pencil"></i>';
+                echo '<i class="fa fa-ban" id="block"></i>';
                 $sql = "SELECT * FROM $tabela LIMIT 1;";
                 $stmt = $db->prepare($sql);
                 $stmt->execute();
@@ -107,7 +114,7 @@
     ?>
     <div class="insert_form" style="display: none;">
         <h2>Dodaj pole</h2>
-        <form action="add_column.php" method="post">
+        <form action="add_column.php" method="post" id="insert_form">
             <input type="text" value="<?=$tabela?>" name="tabela" hidden>
             <label>Nazwa</label><input type="text" name="new_nazwa" required><br/>
             <label>Typ</label><select name="new_typ">
@@ -148,8 +155,9 @@
     </div>
     <div class="update_form insert_form" style="display: none;">
         <h2>Edytuj pole</h2>
-        <form action="edit_column.php" method="post">
+        <form action="edit_column.php" method="post" id="update_form">
             <input type="text" value="<?=$tabela?>" name="tabela" hidden>
+            <input type="text" value="" name="old_name" id="old_name" hidden>
             <label>Nazwa</label><input type="text" name="updated_nazwa" id="updated_nazwa" required><br/>
             <label>Typ</label><select name="updated_typ" id="updated_typ">
                 <option value="int">INT</option>
@@ -174,8 +182,28 @@
             <label>AI</label><input type="checkbox" name="updated_ai" id="updated_ai"><br/>
             <input type="submit"><button>Anuluj</button>
         </form>
+        <form action="delete_column.php" method="post" id="delete_form" hidden>
+            <input type="text" value="<?=$tabela?>" name="tabela" hidden>
+            <input type="text" name="columns" value="" class="delete_input">
+            <input type="submit">
+        </form>
     </div>
     <script>
+        async function decision(){
+          return new Promise(function(resolve, reject){
+            let decision = document.createElement("div");
+            decision.classList.add("decision");
+            decision.innerHTML = `<span>Na pewno?</span><br /><button id="button_tak">TAK</button><button id="button_nie">NIE</button>`;
+            document.body.appendChild(decision);
+            decision.style.animation = "slideInDown 0.5s ease";
+            document.querySelector("#button_tak").addEventListener("click", function(){
+              resolve();
+            })
+            document.querySelector("#button_nie").addEventListener("click", function(){
+              reject();
+            })
+          })
+        }
         document.querySelector("#plus").style.display = "none";
         setTimeout(function() {
             var left = document.querySelector("table").offsetLeft - 50;
@@ -251,6 +279,7 @@
                     document.querySelector(".update_form").style.display = "block";
                     document.querySelector("h1 span").innerHTML = ``;
                     document.querySelector("#updated_nazwa").value = column.querySelector("td").innerText.trim();
+                    document.querySelector("#old_name").value = column.querySelector("td").innerText.trim();
                     document.querySelector("#updated_typ").value = column.querySelector("td:nth-child(2)").innerText.trim().split("(")[0];
                     document.querySelector("#updated_dlugosc").value = column.querySelector("td:nth-child(2)").innerText.trim().split("(")[1].split(")")[0];
                     if(column.querySelector("td:nth-child(3)").innerText == "YES"){
@@ -288,6 +317,50 @@
                 setTimeout(function() {
                     document.querySelector(".update_form").style.display = "none";
                 }, 350)
+            }
+        })
+        document.querySelector(".update_form input[type=submit]").addEventListener("click", async function(e){
+            e.preventDefault();
+            decision().then(function(){
+                document.querySelector("#update_form").submit();
+            },function(){
+                document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
+                setTimeout(function(){
+                  document.querySelector(".decision").remove();
+                }, 500)
+            });
+        })
+        document.querySelector(".insert_form input[type=submit]").addEventListener("click", async function(e){
+            e.preventDefault();
+            decision().then(function(){
+                document.querySelector("#insert_form").submit();
+            },function(){
+                document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
+                setTimeout(function(){
+                  document.querySelector(".decision").remove();
+                }, 500)
+            });
+        })
+        document.querySelector("#block").addEventListener("click", function(){
+            document.querySelector(".delete_input").value = "";
+            document.querySelectorAll(".tr_focused").forEach(column => {
+              if(document.querySelector(".delete_input").value == ""){
+                  document.querySelector(".delete_input").value = document.querySelector(".delete_input").value+"DROP COLUMN "+column.querySelector("td").innerText.trim();
+              }else{
+                  document.querySelector(".delete_input").value = document.querySelector(".delete_input").value+", DROP COLUMN "+column.querySelector("td").innerText.trim();
+              }
+            })
+            if(document.querySelector(".delete_input").value){
+                decision().then(function(){
+                    document.querySelector("#delete_form").submit();
+                },function(){
+                    document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
+                    setTimeout(function(){
+                      document.querySelector(".decision").remove();
+                    }, 500)
+                });
+            }else{
+                document.querySelector("h1 span").innerHTML = `Zaznacz kolumny do usunięcia!`;
             }
         })
     </script>

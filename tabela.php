@@ -122,7 +122,7 @@
                 return $needle !== '' && mb_strpos($haystack, $needle) !== false;
             }
             $licznik = 0;
-            echo '<div class="insert_form" style="display: none;"><h2>Dodaj wiersz</h2><form action="insert.php" method="post"><input type="text" value="'.$tabela.'" name="tabela" hidden>';
+            echo '<div class="insert_form" style="display: none;"><h2>Dodaj wiersz</h2><form action="insert.php" method="post" id="insert_form"><input type="text" value="'.$tabela.'" name="tabela" hidden>';
             foreach($wiersz2 as $key => $value){
                 $sql = "SHOW COLUMNS FROM `$tabela` WHERE Field = '$key';";
                 $stmt = $db->prepare($sql);
@@ -169,6 +169,21 @@
         }
     ?>
     <script>
+        async function decision(){
+          return new Promise(function(resolve, reject){
+            let decision = document.createElement("div");
+            decision.classList.add("decision");
+            decision.innerHTML = `<span>Na pewno?</span><br /><button id="button_tak">TAK</button><button id="button_nie">NIE</button>`;
+            document.body.appendChild(decision);
+            decision.style.animation = "slideInDown 0.5s ease";
+            document.querySelector("#button_tak").addEventListener("click", function(){
+              resolve();
+            })
+            document.querySelector("#button_nie").addEventListener("click", function(){
+              reject();
+            })
+          })
+        }
         window.limit = 50;
         document.querySelector("#plus").addEventListener("click", function() {
             if (document.querySelector(".insert_form").style.display == "none") {
@@ -251,6 +266,17 @@
                     td.parentElement.classList.add("tr_focused");
                 }
             })
+        })
+        document.querySelector(".insert_form input[type=submit]").addEventListener("click", async function(e){
+            e.preventDefault();
+            decision().then(function(){
+                document.querySelector("#insert_form").submit();
+            },function(){
+                document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
+                setTimeout(function(){
+                  document.querySelector(".decision").remove();
+                }, 500)
+            });
         })
     </script>
 </body>

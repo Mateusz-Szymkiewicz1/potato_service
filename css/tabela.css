@@ -95,7 +95,7 @@ td:hover{
     padding: 5px;
     margin: 10px;
 }
-#plus, #struktura, #pencil{
+#plus, #struktura, #pencil, #block{
     font-size: 30px;
     margin-bottom: 10px;
     cursor: pointer;
@@ -161,6 +161,53 @@ input[type=checkbox]{
 .error{
     color: #e74c3c;
     font-size: 26px;
+}
+.decision{
+    margin: auto;
+    position: absolute;
+    width: 400px;
+    height: 120px;
+    top: 30px;
+    left: 0;
+    right: 0;
+    max-width: 90%;
+    background: #eee;
+    font-size: 28px;
+    text-align: center;
+    padding-top: 30px;
+    border: 1px solid #000;
+}
+#button_nie{
+    background: #e74c3c;
+    border: 0;
+    outline: none;
+    height: 35px;
+    width: 100px;
+    color: #fff;
+    font-family: 'font';
+    margin-left: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+#button_nie:hover{
+    background: #d63b2b;
+}
+#button_tak{
+    background: #2ecc71;
+    border: 0;
+    outline: none;
+    height: 35px;
+    width: 100px;
+    color: #fff;
+    font-family: 'font';
+    margin-right: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+#button_tak:hover{
+    background: #1dbb60;
 }
 @-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}
 @-webkit-keyframes slideOutUp{0%{-webkit-transform:translateZ(0);transform:translateZ(0)}to{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:hidden}}
