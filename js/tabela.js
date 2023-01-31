@@ -19,6 +19,9 @@ document.querySelector("#plus").addEventListener("click", function () {
         document.querySelector(".insert_form").style.animation = "slideInDown 0.4s ease";
         document.querySelector(".insert_form").style.display = "block";
     } else {
+        if (document.querySelector(".decision")) {
+            document.querySelector(".decision").remove();
+        }
         document.querySelector(".insert_form").style.animation = "slideOutUp 0.4s ease";
         setTimeout(function () {
             document.querySelector(".insert_form").style.display = "none";
@@ -27,6 +30,9 @@ document.querySelector("#plus").addEventListener("click", function () {
 })
 document.querySelector(".insert_form button").addEventListener("click", function (e) {
     e.preventDefault();
+    if (document.querySelector(".decision")) {
+        document.querySelector(".decision").remove();
+    }
     document.querySelector(".insert_form").style.animation = "slideOutUp 0.4s ease";
     setTimeout(function () {
         document.querySelector(".insert_form").style.display = "none";
@@ -98,7 +104,7 @@ document.querySelectorAll("td").forEach(td => {
 })
 document.querySelector(".insert_form input[type=submit]").addEventListener("click", async function (e) {
     e.preventDefault();
-    if(!document.querySelector(".decision")){
+    if (!document.querySelector(".decision")) {
         decision().then(function () {
             document.querySelector("#insert_form").submit();
         }, function () {
@@ -109,27 +115,77 @@ document.querySelector(".insert_form input[type=submit]").addEventListener("clic
         });
     }
 })
-document.querySelector("#block").addEventListener("click", function(){
+document.querySelector("#block").addEventListener("click", function () {
     document.querySelector(".delete_input").value = "";
     document.querySelectorAll(".tr_focused").forEach(column => {
         if (document.querySelector(".delete_input").value == "") {
             document.querySelector(".delete_input").value = column.querySelector("td").innerText.trim();
         } else {
-            document.querySelector(".delete_input").value = document.querySelector(".delete_input").value+"," +column.querySelector("td").innerText.trim();
+            document.querySelector(".delete_input").value = document.querySelector(".delete_input").value + "," + column.querySelector("td").innerText.trim();
         }
     })
     if (document.querySelector(".delete_input").value) {
-        if(!document.querySelector(".decision")){
+        if (!document.querySelector(".decision")) {
             decision().then(function () {
-                    document.querySelector("#delete_form").submit();
-                }, function () {
-                    document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
-                    setTimeout(function () {
-                        document.querySelector(".decision").remove();
-                    }, 500)
+                document.querySelector("#delete_form").submit();
+            }, function () {
+                document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
+                setTimeout(function () {
+                    document.querySelector(".decision").remove();
+                }, 500)
             });
         }
-    }else {
+    } else {
         document.querySelector("h1 span").innerHTML = `Zaznacz kolumny do usunięcia!`;
+    }
+})
+document.querySelector("#pencil").addEventListener("click", function () {
+    if(document.querySelector(".update_form").style.display == "none"){
+        let focused = document.querySelectorAll(".tr_focused").length;
+        if (focused == 1) {
+            let column = document.querySelector(".tr_focused");
+            document.querySelector(".update_form").style.animation = "slideInDown 0.4s ease";
+            document.querySelector(".update_form").style.display = "block";
+            document.querySelector("h1 span").innerHTML = ``;
+            for(let i = 2;i<=column.querySelectorAll("td").length;i++){
+                let wartosc = column.querySelector(`td:nth-child(${i})`).innerText;
+                document.querySelectorAll(`.update_input`)[i-1].value = wartosc;
+            }
+        }else if (focused == 0){
+            document.querySelector("h1 span").innerHTML = `Zaznacz pole do edycji!`;
+        }else{
+            document.querySelector("h1 span").innerHTML = `Zaznacz tylko jedno pole!`;
+        }
+    }else{
+        if (document.querySelector(".decision")) {
+            document.querySelector(".decision").remove();
+        }
+        document.querySelector(".update_form").style.animation = "slideOutUp 0.4s ease";
+        setTimeout(function () {
+            document.querySelector(".update_form").style.display = "none";
+        }, 350)
+    }
+})
+document.querySelector(".update_form button").addEventListener("click", function (e) {
+    e.preventDefault();
+    if (document.querySelector(".decision")) {
+        document.querySelector(".decision").remove();
+    }
+    document.querySelector(".update_form").style.animation = "slideOutUp 0.4s ease";
+    setTimeout(function () {
+        document.querySelector(".update_form").style.display = "none";
+    }, 350)
+})
+document.querySelector(".update_form input[type=submit]").addEventListener("click", function(e){
+    e.preventDefault();
+    if (!document.querySelector(".decision")) {
+            decision().then(function () {
+                document.querySelector("#update_form").submit();
+            }, function () {
+                document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
+                setTimeout(function () {
+                    document.querySelector(".decision").remove();
+                }, 500)
+            });
     }
 })

@@ -62,11 +62,14 @@
                 if($wiersz_user['Insert_priv']){
                     echo '<i class="fa fa-plus" id="plus"></i>';
                 }
-                if($wiersz_user['Alter_priv']){
-                    echo '<a href="struktura.php?name='.$tabela.'"><i class="fa fa-table" id="struktura"></i></a>';
+                if($wiersz_user['Update_priv']){
+                    echo '<i class="fa fa-pencil" id="pencil"></i>';
                 }
                 if($wiersz_user['Delete_priv']){
                     echo '<i class="fa fa-ban" id="block"></i>';
+                }
+                if($wiersz_user['Alter_priv']){
+                    echo '<a href="struktura.php?name='.$tabela.'"><i class="fa fa-table" id="struktura"></i></a>';
                 }
                 if($wiersz_user['Select_priv']){
                 $sql_count = "SELECT COUNT(*) FROM $tabela;";
@@ -187,5 +190,20 @@
         <input type="text" value="" name="rows" class="delete_input">
         <input type="submit">
     </form>
+    <script>
+        let update_form = document.querySelector(".insert_form").cloneNode(true);
+        update_form.querySelector("h2").innerText = "Edytuj wiersz";
+        update_form.querySelector("form").action = "update.php";
+        update_form.querySelector("form").id = "update_form";
+        update_form.querySelector("form").querySelectorAll("*").forEach(el => {
+            if(el.tagName == "INPUT" || el.tagName == "SELECT"){
+                el.className = "update_input";
+            }
+        })
+        update_form.querySelectorAll("input").forEach(input => input.placeholder = "")
+        update_form.querySelector("input[type=submit]").value = "Edytuj";
+        update_form.className = "update_form insert_form";
+        document.body.appendChild(update_form);
+    </script>
 </body>
 </html>
