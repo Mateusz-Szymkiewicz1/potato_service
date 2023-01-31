@@ -130,25 +130,29 @@ document.querySelector("#pencil").addEventListener("click", function () {
 })
 document.querySelector(".update_form input[type=submit]").addEventListener("click", async function (e) {
     e.preventDefault();
-    decision().then(function () {
-        document.querySelector("#update_form").submit();
-    }, function () {
-        document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
-        setTimeout(function () {
-            document.querySelector(".decision").remove();
-        }, 500)
-    });
+    if(!document.querySelector(".decision")){
+        decision().then(function () {
+            document.querySelector("#update_form").submit();
+        }, function () {
+            document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
+            setTimeout(function () {
+                document.querySelector(".decision").remove();
+            }, 500)
+        });
+    }
 })
 document.querySelector(".insert_form input[type=submit]").addEventListener("click", async function (e) {
     e.preventDefault();
-    decision().then(function () {
-        document.querySelector("#insert_form").submit();
-    }, function () {
-        document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
-        setTimeout(function () {
-            document.querySelector(".decision").remove();
-        }, 500)
-    });
+    if(!document.querySelector(".decision")){
+        decision().then(function () {
+            document.querySelector("#insert_form").submit();
+        }, function () {
+            document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
+            setTimeout(function () {
+                document.querySelector(".decision").remove();
+            }, 500)
+        });
+    }
 })
 document.querySelector("#block").addEventListener("click", function () {
     document.querySelector(".delete_input").value = "";
@@ -160,14 +164,16 @@ document.querySelector("#block").addEventListener("click", function () {
         }
     })
     if (document.querySelector(".delete_input").value) {
-        decision().then(function () {
-            document.querySelector("#delete_form").submit();
-        }, function () {
-            document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
-            setTimeout(function () {
-                document.querySelector(".decision").remove();
-            }, 500)
-        });
+        if(!document.querySelector(".decision")){
+            decision().then(function () {
+                document.querySelector("#delete_form").submit();
+            }, function () {
+                document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
+                setTimeout(function () {
+                    document.querySelector(".decision").remove();
+                }, 500)
+            });
+        }
     } else {
         document.querySelector("h1 span").innerHTML = `Zaznacz kolumny do usunięcia!`;
     }

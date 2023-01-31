@@ -13,10 +13,13 @@
 </head>
 <body>
     <?php
-    $insert_status = $_GET['insert_status'] ?? null;
+    $operation_status = $_GET['insert_status'] ?? null;
     $insert_error = $_GET['insert_error'] ?? null;
-    if($insert_status){
+    if($operation_status == 1){
         echo '<div class="insert_response">Zapytanie INSERT zakończone pomyślnie ;)</div>';
+    }
+    if($operation_status == 3){
+        echo '<div class="insert_response">Pomyślnie usunięto dane</div>';
     }
     if($insert_error){
         switch($insert_error){
@@ -37,7 +40,7 @@
     }
     ?>
     <a href="home.php" draggable="false"><img draggable="false" src="images/back.png" height="60px" width="50px" class="arrow"></a>
-    <h1>Tabela - <?=$_GET['name']?></h1>
+    <h1>Tabela - <?=$_GET['name']?><br/><span class="error"></span></h1>
     <?php
     session_start();
         $tabela = $_GET['name'] ?? null;
@@ -62,6 +65,9 @@
                 if($wiersz_user['Alter_priv']){
                     echo '<a href="struktura.php?name='.$tabela.'"><i class="fa fa-table" id="struktura"></i></a>';
                 }
+                if($wiersz_user['Delete_priv']){
+                    echo '<i class="fa fa-ban" id="block"></i>';
+                }
                 if($wiersz_user['Select_priv']){
                 $sql_count = "SELECT COUNT(*) FROM $tabela;";
                 $stmt_count = $db->prepare($sql_count);
@@ -75,7 +81,12 @@
                 $wiersz = $stmt->fetch(PDO::FETCH_ASSOC);
                 echo '<br/><br/><br/><table><tr>';
                 $types = [];
+                $licznik = 0;
+                $first_column = "";
                 foreach($wiersz as $key => $value){
+                    if($licznik == 0){
+                        $first_column = $key;
+                    }
                     $sql3 = "SHOW COLUMNS FROM $tabela WHERE Field = '$key'";
                     $stmt3 = $db->prepare($sql3);
                     $stmt3->execute();
@@ -89,6 +100,7 @@
                         echo '&nbsp&nbsp<i class="fa fa-key primary_key"></i>';
                     }
                     echo '</th>';
+                    $licznik++;
                 }
                 echo '</tr>';
                 echo "<tr>";
@@ -169,5 +181,11 @@
             echo '<input type="submit" value="Dodaj"><button>Anuluj</button></form></div>';
         }
     ?>
+    <form action="delete.php" method="post" id="delete_form" hidden>
+        <input type="text" value="<?=$tabela?>" name="tabela">
+        <input type="text" value="<?=$first_column?>" name="id_name">
+        <input type="text" value="" name="rows" class="delete_input">
+        <input type="submit">
+    </form>
 </body>
 </html>

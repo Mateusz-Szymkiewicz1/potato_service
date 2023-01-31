@@ -52,7 +52,7 @@ try{
         $sql = "INSERT INTO $tabela ($kolumny) VALUES ($dane);";
         $stmt = $db->prepare($sql);
         $stmt->execute();
-        echo '<script>'.'window.location.replace("tabela.php?name='.$tabela.'&insert_status=OK");'.'</script>';
+        echo '<script>'.'window.location.replace("tabela.php?name='.$tabela.'&insert_status=1");'.'</script>';
     }
 }catch(PDOException $e){
      $errorInfo = $e->errorInfo;

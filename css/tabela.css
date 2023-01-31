@@ -164,7 +164,7 @@ input[type=checkbox]{
 }
 .decision{
     margin: auto;
-    position: absolute;
+    position: fixed;
     width: 400px;
     height: 120px;
     top: 30px;
