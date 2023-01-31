@@ -18,6 +18,9 @@
     if($operation_status == 1){
         echo '<div class="insert_response">Zapytanie INSERT zakończone pomyślnie ;)</div>';
     }
+    if($operation_status == 2){
+        echo '<div class="insert_response">Pomyślnie edytowano dane</div>';
+    }
     if($operation_status == 3){
         echo '<div class="insert_response">Pomyślnie usunięto dane</div>';
     }
@@ -190,6 +193,7 @@
         <input type="text" value="" name="rows" class="delete_input">
         <input type="submit">
     </form>
+    <?php echo '<script>window.first_column = "'.$first_column.'";</script>'; ?>
     <script>
         let update_form = document.querySelector(".insert_form").cloneNode(true);
         update_form.querySelector("h2").innerText = "Edytuj wiersz";
@@ -203,6 +207,8 @@
         update_form.querySelectorAll("input").forEach(input => input.placeholder = "")
         update_form.querySelector("input[type=submit]").value = "Edytuj";
         update_form.className = "update_form insert_form";
+        update_form.querySelector("form").innerHTML = update_form.querySelector("form").innerHTML+`<input type="text" name="id_name" value="${window.first_column}" hidden>`;
+        update_form.querySelector("form").innerHTML = update_form.querySelector("form").innerHTML+`<input type="text" name="row_id" class="update_id" hidden>`;
         document.body.appendChild(update_form);
     </script>
 </body>

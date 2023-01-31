@@ -151,6 +151,7 @@ document.querySelector("#pencil").addEventListener("click", function () {
                 let wartosc = column.querySelector(`td:nth-child(${i})`).innerText;
                 document.querySelectorAll(`.update_input`)[i-1].value = wartosc;
             }
+            document.querySelector(".update_id").value = column.querySelector(`td`).innerText;
         }else if (focused == 0){
             document.querySelector("h1 span").innerHTML = `Zaznacz pole do edycji!`;
         }else{
