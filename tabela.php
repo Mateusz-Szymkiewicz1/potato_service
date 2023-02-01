@@ -62,19 +62,19 @@
                 $stmt = $db->prepare($sql);
                 $stmt->execute();
                 $wiersz_user = $stmt->fetch(PDO::FETCH_ASSOC);
-                if($wiersz_user['Insert_priv']){
+                if($wiersz_user['Insert_priv'] == "Y"){
                     echo '<i class="fa fa-plus" id="plus"></i>';
                 }
-                if($wiersz_user['Update_priv']){
+                if($wiersz_user['Update_priv'] == "Y"){
                     echo '<i class="fa fa-pencil" id="pencil"></i>';
                 }
-                if($wiersz_user['Delete_priv']){
+                if($wiersz_user['Delete_priv'] == "Y"){
                     echo '<i class="fa fa-ban" id="block"></i>';
                 }
-                if($wiersz_user['Alter_priv']){
+                if($wiersz_user['Alter_priv'] == "Y"){
                     echo '<a href="struktura.php?name='.$tabela.'"><i class="fa fa-table" id="struktura"></i></a>';
                 }
-                if($wiersz_user['Select_priv']){
+                if($wiersz_user['Select_priv'] == "Y"){
                 $sql_count = "SELECT COUNT(*) FROM $tabela;";
                 $stmt_count = $db->prepare($sql_count);
                 $stmt_count->execute();

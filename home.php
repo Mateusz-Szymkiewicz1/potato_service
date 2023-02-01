@@ -38,10 +38,10 @@
     <span class="greet2">Co będziemy dzisiaj robić?</span>
     <div class="grid">
         <?php
-            if($wiersz_user['Select_priv']){
+            if($wiersz_user['Select_priv'] == "Y"){
                echo '<div class="card" id="tabele"><i class="fa fa-table"></i><span>Tabele</span></div>';
             }
-            if($wiersz_user['Grant_priv'] or $wiersz_user['Create_user_priv']){
+            if($wiersz_user['Grant_priv'] == "Y" or $wiersz_user['Create_user_priv'] == "Y"){
                echo '<a href="users.php" draggable="false"><div class="card"><i class="fa fa-user"></i><span>Użytkownicy</span></div></a>';
             }
        ?>

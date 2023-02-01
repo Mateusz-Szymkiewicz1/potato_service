@@ -54,7 +54,7 @@ try{
     $stmt = $db->prepare($sql);
     $stmt->execute();
     $wiersz_user = $stmt->fetch(PDO::FETCH_ASSOC);
-    if(!$wiersz_user['Update_priv']){
+    if($wiersz_user['Update_priv'] != "Y"){
        echo '<script>'.'window.location.replace("tabela.php?name='.$tabela.'&insert_error=1045");'.'</script>';
        die;
     }else{

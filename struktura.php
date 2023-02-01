@@ -71,7 +71,7 @@
                 $stmt = $db->prepare($sql);
                 $stmt->execute();
                 $wiersz_user = $stmt->fetch(PDO::FETCH_ASSOC);
-                if(!$wiersz_user['Alter_priv']){
+                if($wiersz_user['Alter_priv'] != "Y"){
                     echo '<script>'.'window.location.replace("home.php");'.'</script>';
                 }
                 echo '<i class="fa fa-plus" id="plus"></i>';
