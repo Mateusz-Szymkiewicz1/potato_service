@@ -190,3 +190,21 @@ document.querySelector(".update_form input[type=submit]").addEventListener("clic
             });
     }
 })
+let zaznacz_counter = 1;
+document.querySelector(".zaznacz").addEventListener("click", function (e) {
+    if (zaznacz_counter % 2) {
+        document.querySelectorAll("tr").forEach(tr => {
+            tr.className = "tr_focused";
+            e.target.innerText = "Odznacz wszystko";
+        })
+        document.querySelector("tr").removeAttribute("class");
+    } else {
+        if (document.querySelector(".tr_focused")) {
+            document.querySelectorAll("tr").forEach(tr => {
+                tr.removeAttribute("class");
+            })
+            e.target.innerText = "Zaznacz wszystko";
+        }
+    }
+    zaznacz_counter++;
+})

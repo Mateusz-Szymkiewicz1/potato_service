@@ -74,6 +74,7 @@
                 if($wiersz_user['Alter_priv'] == "Y"){
                     echo '<a href="struktura.php?name='.$tabela.'"><i class="fa fa-table" id="struktura"></i></a>';
                 }
+                echo '<i class="zaznacz">Zaznacz wszystko</i>';
                 if($wiersz_user['Select_priv'] == "Y"){
                 $sql_count = "SELECT COUNT(*) FROM $tabela;";
                 $stmt_count = $db->prepare($sql_count);
@@ -152,21 +153,28 @@
                 if(str_contains($wiersz_kolumna["Extra"],"auto_increment")){
                     $ai = true;
                 }
-                if(str_starts_with($types[$licznik], 'int') and $ai == false){
+                if((str_starts_with($types[$licznik], 'int') or str_starts_with($types[$licznik], 'decimal')) and $ai == false){
                     echo '<input type="number" placeholder="0" name="'.$key.'num"';
                     if($null == "NO"){
                         echo 'required';
                     }
                     echo '>'.$key.'<br/>';
                 }
-                if(str_starts_with($types[$licznik], 'varchar') and $ai == false){
+                if(str_starts_with($types[$licznik], 'date')){
+                    echo '<input type="date" name="'.$key.'"';
+                    if($null == "NO"){
+                        echo 'required';
+                    }
+                    echo '>'.$key.'<br/>';
+                }
+                if(str_starts_with($types[$licznik], 'varchar') or str_starts_with($types[$licznik], 'text') or str_starts_with($types[$licznik], 'longtext')){
                     echo '<input type="text" placeholder="'.$value.'..." name="'.$key.'"';
                     if($null == "NO"){
                         echo 'required';
                     }
                     echo '>'.$key.'<br/>';
                 }
-                if(str_starts_with($types[$licznik], 'enum') and $ai == false){
+                if(str_starts_with($types[$licznik], 'enum')){
                     $arr = explode("'",$types[$licznik]);
                     array_splice($arr,0,1);
                     array_splice($arr,count($arr)-1,1);

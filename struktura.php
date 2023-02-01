@@ -77,6 +77,7 @@
                 echo '<i class="fa fa-plus" id="plus"></i>';
                 echo '<i class="fa fa-pencil" id="pencil"></i>';
                 echo '<i class="fa fa-ban" id="block"></i>';
+                echo '<i class="zaznacz">Zaznacz wszystko</i>';
                 $sql = "SELECT * FROM $tabela LIMIT 1;";
                 $stmt = $db->prepare($sql);
                 $stmt->execute();

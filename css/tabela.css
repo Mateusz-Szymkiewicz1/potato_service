@@ -209,5 +209,10 @@ input[type=checkbox]{
 #button_tak:hover{
     background: #1dbb60;
 }
+.zaznacz{
+    font-weight: 600;
+    font-size: 22px;
+    cursor: pointer;
+}
 @-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}
 @-webkit-keyframes slideOutUp{0%{-webkit-transform:translateZ(0);transform:translateZ(0)}to{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:hidden}}

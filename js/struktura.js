@@ -130,7 +130,7 @@ document.querySelector("#pencil").addEventListener("click", function () {
 })
 document.querySelector(".update_form input[type=submit]").addEventListener("click", async function (e) {
     e.preventDefault();
-    if(!document.querySelector(".decision")){
+    if (!document.querySelector(".decision")) {
         decision().then(function () {
             document.querySelector("#update_form").submit();
         }, function () {
@@ -143,7 +143,7 @@ document.querySelector(".update_form input[type=submit]").addEventListener("clic
 })
 document.querySelector(".insert_form input[type=submit]").addEventListener("click", async function (e) {
     e.preventDefault();
-    if(!document.querySelector(".decision")){
+    if (!document.querySelector(".decision")) {
         decision().then(function () {
             document.querySelector("#insert_form").submit();
         }, function () {
@@ -164,7 +164,7 @@ document.querySelector("#block").addEventListener("click", function () {
         }
     })
     if (document.querySelector(".delete_input").value) {
-        if(!document.querySelector(".decision")){
+        if (!document.querySelector(".decision")) {
             decision().then(function () {
                 document.querySelector("#delete_form").submit();
             }, function () {
@@ -177,4 +177,22 @@ document.querySelector("#block").addEventListener("click", function () {
     } else {
         document.querySelector("h1 span").innerHTML = `Zaznacz kolumny do usunięcia!`;
     }
+})
+let zaznacz_counter = 1;
+document.querySelector(".zaznacz").addEventListener("click", function (e) {
+    if (zaznacz_counter % 2) {
+        document.querySelectorAll("tr").forEach(tr => {
+            tr.className = "tr_focused";
+            e.target.innerText = "Odznacz wszystko";
+        })
+        document.querySelector("tr").removeAttribute("class");
+    } else {
+        if (document.querySelector(".tr_focused")) {
+            document.querySelectorAll("tr").forEach(tr => {
+                tr.removeAttribute("class");
+            })
+            e.target.innerText = "Zaznacz wszystko";
+        }
+    }
+    zaznacz_counter++;
 })
