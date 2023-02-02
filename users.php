@@ -15,6 +15,10 @@
             max-width: 400px;
             word-wrap: break-word;
         }
+        .insert_form{
+            left: 20%;
+            right: 20%;
+        }
     </style>
 </head>
 <body>
@@ -68,11 +72,55 @@
     <div class="insert_form new_user" style="display: none;">
         <h2>Dodaj użytkownika</h2>
         <form action="add_user.php" id="new_user">
-            <label>Nazwa </label><input type="text" name="new_user_name"><br/>
-            <label>Host </label><input type="text" name="new_user_host"><br/>
+            <label>Nazwa </label><input type="text" name="new_user_name" required><br/>
+            <label>Host </label><input type="text" name="new_user_host" required><br/>
             <label>Hasło </label><input type="password" name="new_user_pass" id="new_user_pass"><br/>
             <label>Powtórz hasło </label><input type="password" name="new_user_pass2" id="new_user_pass2"><br/>
             <span class="span_wygeneruj">Wygeneruj hasło</span><br/>
+            <div class="section">
+                <p>Dane <input type="checkbox" class="section_checkbox"></p>
+                <label>Select</label><input type="checkbox" name="new_user_select">
+                <label>Insert</label><input type="checkbox" name="new_user_insert">
+                <label>Update</label><input type="checkbox" name="new_user_update">
+                <label>Delete</label><input type="checkbox" name="new_user_delete">
+                <label>File</label><input type="checkbox" name="new_user_file">
+            </div>
+            <div class="section">
+                <p>Struktura <input type="checkbox" class="section_checkbox"></p>
+                <label>Create</label><input type="checkbox" name="new_user_create">
+                <label>Alter</label><input type="checkbox" name="new_user_alter">
+                <label>Index</label><input type="checkbox" name="new_user_index">
+                <label>Drop</label><input type="checkbox" name="new_user_drop">
+                <label>Create temporary tables</label><input type="checkbox" name="new_user_create_temporary">
+                <label>Show view</label><input type="checkbox" name="new_user_show_view">
+                <label>Create routine</label><input type="checkbox" name="new_user_create_routine">
+                <label>Alter routine</label><input type="checkbox" name="new_user_alter_routine">
+                <label>Execute</label><input type="checkbox" name="new_user_execute">
+                <label>Create view</label><input type="checkbox" name="new_user_create_view">
+                <label>Event</label><input type="checkbox" name="new_user_event">
+                <label>Trigger</label><input type="checkbox" name="new_user_trigger">
+            </div>
+            <div class="section">
+                <p>Administracja <input type="checkbox" class="section_checkbox"></p>
+                <label>Grant</label><input type="checkbox" name="new_user_grant">
+                <label>Super</label><input type="checkbox" name="new_user_super">
+                <label>Process</label><input type="checkbox" name="new_user_process">
+                <label>Reload</label><input type="checkbox" name="new_user_reload">
+                <label>Shutdown</label><input type="checkbox" name="new_user_shutdown">
+                <label>Show databases</label><input type="checkbox" name="new_user_show_databases">
+                <label>Lock tables</label><input type="checkbox" name="new_user_lock_tables">
+                <label>References</label><input type="checkbox" name="new_user_references">
+                <label>Replication client</label><input type="checkbox" name="new_user_replication_client">
+                <label>Replication slave</label><input type="checkbox" name="new_user_replication_slave">
+                <label>Create user</label><input type="checkbox" name="new_user_create_user">
+            </div>
+            <div class="section">
+                <p>Ograniczenia zasobów<br/><br/>Uwaga: Ustawienie tych opcji na 0 (zero) usuwa ograniczenie.</p>
+                <label>Max queries per hour</label><input type="number" name="new_user_max_queries" value="0" min="0"><br/>
+                <label>Max updates per hour</label><input type="number" name="new_user_max_updates" value="0" min="0"><br/>
+                <label>Max connections per hour</label><input type="number" name="new_user_max_conns" value="0" min="0"><br/>
+                <label>Max user_connections per hour</label><input type="number" name="new_user_max_user_conns" value="0" min="0">
+            </div><br/>
             <input type="submit" value="Dodaj"><button>Anuluj</button>
         </form>
     </div>

@@ -45,6 +45,12 @@
                echo '<a href="users.php" draggable="false"><div class="card"><i class="fa fa-user"></i><span>Użytkownicy</span></div></a>';
             }
        ?>
+       <a href="sql.php" draggable="false">
+            <div class="card">
+                <i class="fa fa-terminal"></i>
+                <span>SQL</span>
+            </div>
+        </a>
         <a href="index.php" draggable="false">
             <div class="card">
                 <i class="fa fa-sign-out"></i>

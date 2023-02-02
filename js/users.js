@@ -67,3 +67,16 @@ document.querySelector(".new_user input[type=submit]").addEventListener("click",
         });
     }
 })
+document.querySelectorAll(".section_checkbox").forEach(el => {
+    el.addEventListener("click", function(e){
+        if(e.target.checked){
+            e.target.parentElement.parentElement.querySelectorAll("input").forEach(input => {
+                input.checked = true;
+            })
+        }else{
+           e.target.parentElement.parentElement.querySelectorAll("input").forEach(input => {
+                input.checked = false;
+           }) 
+        }
+    })
+})

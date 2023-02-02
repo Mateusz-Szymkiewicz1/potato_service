@@ -226,5 +226,21 @@ input[type=checkbox]{
     padding: 10px;
     cursor: auto;
 }
+.section{
+    background: #999;
+    width: 500px;
+    color: #fff;
+    margin: auto;
+    padding: 10px;
+    margin-top: 30px;
+}
+.section p {
+    margin: 0;
+    padding: 0;
+    font-weight: 600;
+    font-size: 24px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 @-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}
 @-webkit-keyframes slideOutUp{0%{-webkit-transform:translateZ(0);transform:translateZ(0)}to{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:hidden}}
