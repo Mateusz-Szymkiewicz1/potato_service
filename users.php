@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="js/users.js" defer></script>
     <style>
         td{
             max-width: 400px;
@@ -31,7 +32,8 @@
             $sql = "Select * from mysql.user;";
             $stmt = $db->prepare($sql);
             $stmt->execute();
-            echo '<table><tr><th>Nazwa</th><th>Host</th><th>Uprawnienia</th><th>Nadawanie</th></tr>';
+            echo '<i class="fa fa-plus" id="plus"></i>';
+            echo '<br/><br/><br/><table><tr><th>Nazwa</th><th>Host</th><th>Uprawnienia</th><th>Nadawanie</th></tr>';
             while($wiersz_users = $stmt->fetch(PDO::FETCH_ASSOC)){
                 echo '<tr>';
                 echo '<td>'.$wiersz_users['User'].'</td>';
@@ -63,5 +65,16 @@
             echo '</table>';
         }
     ?>
+    <div class="insert_form new_user" style="display: none;">
+        <h2>Dodaj użytkownika</h2>
+        <form action="add_user.php" id="new_user">
+            <label>Nazwa </label><input type="text" name="new_user_name"><br/>
+            <label>Host </label><input type="text" name="new_user_host"><br/>
+            <label>Hasło </label><input type="password" name="new_user_pass" id="new_user_pass"><br/>
+            <label>Powtórz hasło </label><input type="password" name="new_user_pass2" id="new_user_pass2"><br/>
+            <span class="span_wygeneruj">Wygeneruj hasło</span><br/>
+            <input type="submit" value="Dodaj"><button>Anuluj</button>
+        </form>
+    </div>
 </body>
 </html>
