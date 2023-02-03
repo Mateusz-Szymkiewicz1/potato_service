@@ -47,6 +47,9 @@
         if($operation_info == 1){
             echo '<div class="insert_response">Pomyślnie dodano użytkownika!</div>';
         }
+        if($operation_info == 3){
+            echo '<div class="insert_response">Pomyślnie usunięto użytkownika!</div>';
+        }
         session_start();
         if(!$_SESSION['login']){
             echo '<script>'.'window.location.replace("home.php");'.'</script>';
@@ -59,6 +62,7 @@
             $stmt = $db->prepare($sql);
             $stmt->execute();
             echo '<i class="fa fa-plus" id="plus"></i>';
+            echo '<i class="fa fa-ban" id="block"></i>';
             echo '<br/><br/><br/><table><tr><th>Nazwa</th><th>Host</th><th>Uprawnienia</th><th>Nadawanie</th></tr>';
             while($wiersz_users = $stmt->fetch(PDO::FETCH_ASSOC)){
                 echo '<tr>';
@@ -144,6 +148,10 @@
                 <label>Max user_connections per hour</label><input type="number" name="new_user_max_user_conns" value="0" min="0">
             </div><br/>
             <input type="submit" value="Dodaj"><button>Anuluj</button>
+        </form>
+        <form action="delete_user.php" method="post" id="delete_form" hidden>
+            <input type="text" name="users" value="" class="delete_input">
+            <input type="submit">
         </form>
     </div>
 </body>

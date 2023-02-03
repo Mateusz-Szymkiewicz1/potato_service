@@ -136,6 +136,7 @@ document.querySelector("#block").addEventListener("click", function () {
             });
         }
     } else {
+        window.scrollTo(0,0);
         document.querySelector("h1 span").innerHTML = `Zaznacz kolumny do usunięcia!`;
     }
 })
@@ -153,8 +154,10 @@ document.querySelector("#pencil").addEventListener("click", function () {
             }
             document.querySelector(".update_id").value = column.querySelector(`td`).innerText;
         }else if (focused == 0){
+            window.scrollTo(0,0);
             document.querySelector("h1 span").innerHTML = `Zaznacz pole do edycji!`;
         }else{
+            window.scrollTo(0,0);
             document.querySelector("h1 span").innerHTML = `Zaznacz tylko jedno pole!`;
         }
     }else{

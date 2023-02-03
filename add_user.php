@@ -53,7 +53,7 @@ if($limits != ""){
     $use_with_limits = "WITH";
 }
 
-if($login){
+if($login and $new_user_name and $new_user_host){
     try{
         $db = new PDO("mysql:host=localhost;dbname=baza_testowa", $login, $_SESSION['haslo'],array(
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

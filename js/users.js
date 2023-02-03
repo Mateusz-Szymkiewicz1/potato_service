@@ -97,3 +97,37 @@ if (document.querySelector(".insert_response")) {
         }
     })
 }
+document.querySelectorAll("td").forEach(td => {
+    td.addEventListener("click", function () {
+        if (td.parentElement.className == "tr_focused") {
+            td.parentElement.removeAttribute("class");
+        } else {
+            td.parentElement.classList.add("tr_focused");
+        }
+    })
+})
+document.querySelector("#block").addEventListener("click", function () {
+    document.querySelector(".delete_input").value = "";
+    document.querySelectorAll(".tr_focused").forEach(column => {
+        if (document.querySelector(".delete_input").value == "") {
+            document.querySelector(".delete_input").value = document.querySelector(".delete_input").value+column.querySelector("td").innerText.trim();
+        } else {
+            document.querySelector(".delete_input").value = document.querySelector(".delete_input").value + "," + column.querySelector("td").innerText.trim();
+        }
+    })
+    if (document.querySelector(".delete_input").value) {
+        if (!document.querySelector(".decision")) {
+            decision().then(function () {
+                document.querySelector("#delete_form").submit();
+            }, function () {
+                document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
+                setTimeout(function () {
+                    document.querySelector(".decision").remove();
+                }, 500)
+            });
+        }
+    } else {
+        window.scrollTo(0,0);
+        document.querySelector("h1 span").innerHTML = `Zaznacz kolumny do usunięcia!`;
+    }
+})
