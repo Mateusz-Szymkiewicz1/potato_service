@@ -1,3 +1,6 @@
+*{
+    scroll-behavior: smooth;
+}
 body{
      margin: 0;
     padding: 0;
@@ -241,6 +244,10 @@ input[type=checkbox]{
     font-size: 24px;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+.new_user_error{
+    color: #e74c3c;
+    font-size: 24px;
 }
 @-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}
 @-webkit-keyframes slideOutUp{0%{-webkit-transform:translateZ(0);transform:translateZ(0)}to{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:hidden}}

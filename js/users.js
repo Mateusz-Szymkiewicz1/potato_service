@@ -56,15 +56,25 @@ document.querySelector("#new_user span").addEventListener("click", function(e){
 })
 document.querySelector(".new_user input[type=submit]").addEventListener("click", async function (e) {
     e.preventDefault();
-    if (!document.querySelector(".decision")) {
-        decision().then(function () {
-            document.querySelector("#new_user").submit();
-        }, function () {
-            document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
-            setTimeout(function () {
-                document.querySelector(".decision").remove();
-            }, 500)
-        });
+    if(document.querySelector("#new_user_name").value && document.querySelector("#new_user_host").value){
+        if(document.querySelector("#new_user_pass").value == document.querySelector("#new_user_pass2").value){
+            if (!document.querySelector(".decision")) {
+                decision().then(function () {
+                    document.querySelector("#new_user").submit();
+                }, function () {
+                    document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
+                    setTimeout(function () {
+                        document.querySelector(".decision").remove();
+                    }, 500)
+                });
+            }
+        }else{
+            document.querySelector(".new_user").scrollTo(0,0);
+            document.querySelector(".new_user_error").innerText = "Hasła nie są zgodne!";
+        }
+    }else{
+        document.querySelector(".new_user").scrollTo(0,0);
+        document.querySelector(".new_user_error").innerText = "Podaj nazwę użytkownika i hosta!";
     }
 })
 document.querySelectorAll(".section_checkbox").forEach(el => {
@@ -80,3 +90,10 @@ document.querySelectorAll(".section_checkbox").forEach(el => {
         }
     })
 })
+if (document.querySelector(".insert_response")) {
+    document.querySelector(".insert_response").addEventListener("click", function () {
+        if (document.querySelector(".insert_response")) {
+            document.querySelector(".insert_response").style.display = "none";
+        }
+    })
+}

@@ -25,6 +25,28 @@
     <a href="home.php" draggable="false"><img draggable="false" src="images/back.png" height="60px" width="50px" class="arrow"></a>
     <h1>Użytkownicy<br/><span class="error"></span></h1>
     <?php
+        $error = $_GET['error'] ?? null;
+        $operation_info = $_GET['operation_info'] ?? null;
+        if($error){
+            switch($error){
+                case 1062:
+                    $err_desc = "Klucz unikalny nie może się powtarzać!";
+                    break;
+                case 1068:
+                    $err_desc = "Może istnieć tylko jeden klucz główny!";
+                    break;
+                case 1075:
+                    $err_desc = "Może istnieć tylko jedna kolumna z inkrementacją (i musi być ona kluczem)!";
+                    break;
+                default:
+                    $err_desc = "Nieprzewidziany błąd!";
+                    break;
+            }
+            echo '<div class="insert_response insert_error">'.$error." - ".$err_desc.'</div>';
+        }
+        if($operation_info == 1){
+            echo '<div class="insert_response">Pomyślnie dodano użytkownika!</div>';
+        }
         session_start();
         if(!$_SESSION['login']){
             echo '<script>'.'window.location.replace("home.php");'.'</script>';
@@ -70,10 +92,10 @@
         }
     ?>
     <div class="insert_form new_user" style="display: none;">
-        <h2>Dodaj użytkownika</h2>
-        <form action="add_user.php" id="new_user">
-            <label>Nazwa </label><input type="text" name="new_user_name" required><br/>
-            <label>Host </label><input type="text" name="new_user_host" required><br/>
+        <h2>Dodaj użytkownika<br/><span class="new_user_error"></span></h2>
+        <form action="add_user.php" id="new_user" method="post">
+            <label>Nazwa* </label><input type="text" name="new_user_name" id="new_user_name" required><br/>
+            <label>Host* </label><input type="text" name="new_user_host" id="new_user_host" value="%" required><br/>
             <label>Hasło </label><input type="password" name="new_user_pass" id="new_user_pass"><br/>
             <label>Powtórz hasło </label><input type="password" name="new_user_pass2" id="new_user_pass2"><br/>
             <span class="span_wygeneruj">Wygeneruj hasło</span><br/>
