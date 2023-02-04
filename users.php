@@ -62,6 +62,7 @@
             $stmt = $db->prepare($sql);
             $stmt->execute();
             echo '<i class="fa fa-plus" id="plus"></i>';
+            echo '<i class="fa fa-pencil" id="pencil"></i>';
             echo '<i class="fa fa-ban" id="block"></i>';
             echo '<br/><br/><br/><table><tr><th>Nazwa</th><th>Host</th><th>Uprawnienia</th><th>Nadawanie</th></tr>';
             while($wiersz_users = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -149,10 +150,61 @@
             </div><br/>
             <input type="submit" value="Dodaj"><button>Anuluj</button>
         </form>
+        </div>
+        <div class="insert_form edit_user" style="display: none;">
+        <h2></h2>
+        <form action="edit_user.php" id="edit_user" method="post">
+           <input type="text" hidden value="" name="user_name" id="user_name">
+            <div class="section">
+                <p>Dane <input type="checkbox" class="section_checkbox"></p>
+                <label>Select</label><input type="checkbox" name="edit_user_select" id="edit_user_select">
+                <label>Insert</label><input type="checkbox" name="edit_user_insert" id="edit_user_insert">
+                <label>Update</label><input type="checkbox" name="edit_user_update" id="edit_user_update">
+                <label>Delete</label><input type="checkbox" name="edit_user_delete" id="edit_user_delete">
+                <label>File</label><input type="checkbox" name="edit_user_file" id="edit_user_file">
+            </div>
+            <div class="section">
+                <p>Struktura <input type="checkbox" class="section_checkbox"></p>
+                <label>Create</label><input type="checkbox" name="edit_user_create" id="edit_user_create">
+                <label>Alter</label><input type="checkbox" name="edit_user_alter" id="edit_user_alter">
+                <label>Index</label><input type="checkbox" name="edit_user_index" id="edit_user_index">
+                <label>Drop</label><input type="checkbox" name="edit_user_drop" id="edit_user_drop">
+                <label>Create temporary tables</label><input type="checkbox" name="edit_user_create_tmp_tables" id="edit_user_create_tmp_tables">
+                <label>Show view</label><input type="checkbox" name="edit_user_show_view" id="edit_user_show_view">
+                <label>Create routine</label><input type="checkbox" name="edit_user_create_routine" id="edit_user_create_routine">
+                <label>Alter routine</label><input type="checkbox" name="edit_user_alter_routine" id="edit_user_alter_routine">
+                <label>Execute</label><input type="checkbox" name="edit_user_execute" id="edit_user_execute">
+                <label>Create view</label><input type="checkbox" name="edit_user_create_view" id="edit_user_create_view"> 
+                <label>Event</label><input type="checkbox" name="edit_user_event" id="edit_user_event">
+                <label>Trigger</label><input type="checkbox" name="edit_user_trigger" id="edit_user_trigger">
+            </div>
+            <div class="section">
+                <p>Administracja <input type="checkbox" class="section_checkbox"></p>
+                <label>Grant</label><input type="checkbox" name="edit_user_grant" id="edit_user_grant">
+                <label>Super</label><input type="checkbox" name="edit_user_super" id="edit_user_super">
+                <label>Process</label><input type="checkbox" name="edit_user_process" id="edit_user_process">
+                <label>Reload</label><input type="checkbox" name="edit_user_reload" id="edit_user_reload">
+                <label>Shutdown</label><input type="checkbox" name="edit_user_shutdown" id="edit_user_shutdown">
+                <label>Show databases</label><input type="checkbox" name="edit_user_show_db" id="edit_user_show_db">
+                <label>Lock tables</label><input type="checkbox" name="edit_user_lock_tables" id="edit_user_lock_tables">
+                <label>References</label><input type="checkbox" name="edit_user_references" id="edit_user_references">
+                <label>Replication client</label><input type="checkbox" name="edit_user_repl_client" id="edit_user_repl_client">
+                <label>Replication slave</label><input type="checkbox" name="edit_user_repl_slave" id="edit_user_repl_slave">
+                <label>Create user</label><input type="checkbox" name="edit_user_create_user" id="edit_user_create_user">
+            </div>
+            <div class="section">
+                <p>Ograniczenia zasobów<br/><br/>Uwaga: Ustawienie tych opcji na 0 (zero) usuwa ograniczenie.</p>
+                <label>Max queries per hour</label><input type="number" name="new_user_max_queries" value="0" min="0"><br/>
+                <label>Max updates per hour</label><input type="number" name="new_user_max_updates" value="0" min="0"><br/>
+                <label>Max connections per hour</label><input type="number" name="new_user_max_conns" value="0" min="0"><br/>
+                <label>Max user_connections per hour</label><input type="number" name="new_user_max_user_conns" value="0" min="0">
+            </div><br/>
+            <input type="submit" value="Edytuj"><button>Anuluj</button>
+        </form>
+        </div>
         <form action="delete_user.php" method="post" id="delete_form" hidden>
             <input type="text" name="users" value="" class="delete_input">
             <input type="submit">
         </form>
-    </div>
 </body>
 </html>
