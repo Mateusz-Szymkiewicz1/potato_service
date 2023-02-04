@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="js/struktura.js" defer></script>
+    <script src="js/shared.js" defer></script>
     <style>
         #plus{
             padding-bottom: 0;

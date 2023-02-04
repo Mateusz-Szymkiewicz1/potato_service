@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="js/users.js" defer></script>
+    <script src="js/shared.js" defer></script>
     <style>
         td{
             max-width: 400px;
@@ -67,6 +68,7 @@
             echo '<i class="fa fa-plus" id="plus"></i>';
             echo '<i class="fa fa-pencil" id="pencil"></i>';
             echo '<i class="fa fa-ban" id="block"></i>';
+            echo '<i class="zaznacz">Zaznacz wszystko</i>';
             echo '<br/><br/><br/><table><tr><th>Nazwa</th><th>Host</th><th>Uprawnienia</th><th>Nadawanie</th></tr>';
             while($wiersz_users = $stmt->fetch(PDO::FETCH_ASSOC)){
                 echo '<tr>';
@@ -158,9 +160,9 @@
             <input type="submit" value="Dodaj"><button>Anuluj</button>
         </form>
         </div>
-        <div class="insert_form edit_user" style="display: none;">
+        <div class="insert_form update_form edit_user" style="display: none;">
         <h2></h2>
-        <form action="edit_user.php" id="edit_user" method="post">
+        <form action="edit_user.php" id="update_form" method="post">
            <input type="text" hidden value="" name="user_name" id="user_name">
             <div class="section">
                 <p>Dane <input type="checkbox" class="section_checkbox"></p>
