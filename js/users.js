@@ -160,6 +160,14 @@ document.querySelector("#pencil").addEventListener("click", function () {
                     }
                 })
             }
+            let max_queries = parseInt(tr.querySelectorAll("td")[4].innerText);
+            let max_updates = parseInt(tr.querySelectorAll("td")[5].innerText);
+            let max_conns = parseInt(tr.querySelectorAll("td")[6].innerText);
+            let max_user_conns = parseInt(tr.querySelectorAll("td")[7].innerText);
+            document.querySelector("#edit_user_max_queries").value = max_queries;
+            document.querySelector("#edit_user_max_updates").value = max_updates;
+            document.querySelector("#edit_user_max_conns").value = max_conns;
+            document.querySelector("#edit_user_max_user_conns").value = max_user_conns;
         }else if(focused == 0){
             window.scrollTo(0, 0);
             document.querySelector("h1 span").innerHTML = `Zaznacz użytkownika do edycji!`;

@@ -47,6 +47,9 @@
         if($operation_info == 1){
             echo '<div class="insert_response">Pomyślnie dodano użytkownika!</div>';
         }
+        if($operation_info == 2){
+            echo '<div class="insert_response">Pomyślnie edytowano użytkownika!</div>';
+        }
         if($operation_info == 3){
             echo '<div class="insert_response">Pomyślnie usunięto użytkownika!</div>';
         }
@@ -91,6 +94,10 @@
                     $nadawanie = "Nie";
                 }
                 echo '<td>'.$nadawanie.'</td>';
+                echo '<td hidden>'.$wiersz_users['max_questions'].'</td>';
+                echo '<td hidden>'.$wiersz_users['max_updates'].'</td>';
+                echo '<td hidden>'.$wiersz_users['max_connections'].'</td>';
+                echo '<td hidden>'.$wiersz_users['max_user_connections'].'</td>';
                 echo '</tr>';
             }
             echo '</table>';
@@ -169,7 +176,7 @@
                 <label>Alter</label><input type="checkbox" name="edit_user_alter" id="edit_user_alter">
                 <label>Index</label><input type="checkbox" name="edit_user_index" id="edit_user_index">
                 <label>Drop</label><input type="checkbox" name="edit_user_drop" id="edit_user_drop">
-                <label>Create temporary tables</label><input type="checkbox" name="edit_user_create_tmp_tables" id="edit_user_create_tmp_tables">
+                <label>Create temporary tables</label><input type="checkbox" name="edit_user_create_tmp_tables" id="edit_user_create_tmp_table">
                 <label>Show view</label><input type="checkbox" name="edit_user_show_view" id="edit_user_show_view">
                 <label>Create routine</label><input type="checkbox" name="edit_user_create_routine" id="edit_user_create_routine">
                 <label>Alter routine</label><input type="checkbox" name="edit_user_alter_routine" id="edit_user_alter_routine">
@@ -194,10 +201,10 @@
             </div>
             <div class="section">
                 <p>Ograniczenia zasobów<br/><br/>Uwaga: Ustawienie tych opcji na 0 (zero) usuwa ograniczenie.</p>
-                <label>Max queries per hour</label><input type="number" name="new_user_max_queries" value="0" min="0"><br/>
-                <label>Max updates per hour</label><input type="number" name="new_user_max_updates" value="0" min="0"><br/>
-                <label>Max connections per hour</label><input type="number" name="new_user_max_conns" value="0" min="0"><br/>
-                <label>Max user_connections per hour</label><input type="number" name="new_user_max_user_conns" value="0" min="0">
+                <label>Max queries per hour</label><input type="number" name="edit_user_max_queries" min="0" id="edit_user_max_queries"><br/>
+                <label>Max updates per hour</label><input type="number" name="edit_user_max_updates" min="0" id="edit_user_max_updates"><br/>
+                <label>Max connections per hour</label><input type="number" name="edit_user_max_conns" min="0" id="edit_user_max_conns"><br/>
+                <label>Max user_connections per hour</label><input type="number" name="edit_user_max_user_conns"  min="0" id="edit_user_max_user_conns">
             </div><br/>
             <input type="submit" value="Edytuj"><button>Anuluj</button>
         </form>
