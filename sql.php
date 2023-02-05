@@ -52,7 +52,7 @@
             font-family: terminal;
             transition: background 0.4s;
         }
-        button:hover{
+        .wykonaj:hover{
             background: #ccb774;
             color: #fff;
             border: 0;
@@ -64,6 +64,23 @@
             height: 40vh;
             background: #ccc;
             overflow: auto;
+            font-size: 26px;
+            padding: 10px;
+        }
+        .szablon{
+            float: left;
+            margin-right: 20px;
+            height: 30px;
+            cursor: pointer;
+            background: transparent;
+            border: 1px solid #000;
+            outline: none;
+            font-family: terminal;
+            transition: 0.4s;
+        }
+        .szablon:hover{
+            background: #ccb774;
+            color: #fff;
         }
     </style>
 </head>
@@ -80,6 +97,15 @@
                 break;
             case 1075:
                 $err_desc = "Może istnieć tylko jedna kolumna z inkrementacją (i musi być ona kluczem)!";
+                break;
+            case 1064:
+                $err_desc = "Błąd składniowy!";
+                break;
+            case 1142:
+                $err_desc = "Brak uprawnień!";
+                break;
+            case 1146:
+                $err_desc = "Podana tabela nie istnieje!";
                 break;
             default:
                 $err_desc = "Nieprzewidziany błąd!";
@@ -105,6 +131,10 @@
 <body>
    <a href="home.php" draggable="false"><img draggable="false" src="images/back.png" height="60px" width="50px" class="arrow"></a>
     <h1>SQL</h1>
+    <button id="btn_select" class="szablon">SELECT</button>
+    <button id="btn_insert" class="szablon">INSERT</button>
+    <button id="btn_update" class="szablon">UPDATE</button>
+    <br/><br/>
     <form action="sql.php" method="post">
         <textarea spellcheck="false" name="query" placeholder="Zapytanie..."></textarea>
     </form>
@@ -125,7 +155,7 @@
             })
             })
         }
-        document.querySelector("button").addEventListener("click", function(){
+        document.querySelector(".wykonaj").addEventListener("click", function(){
             if(document.querySelector("textarea").value){
                 decision().then(function () {
                     document.querySelector("form").submit();
@@ -144,6 +174,26 @@
                 }
             })
         }
+        document.querySelector("#btn_select").style.display = "none";
+        setTimeout(function () {
+            var left = document.querySelector("textarea").offsetLeft - 50;
+            document.querySelector("#btn_select").style.marginLeft = left + "px";
+            document.querySelector("#btn_select").style.display = "block";
+        }, 100)
+        window.addEventListener("resize", function () {
+            var left = document.querySelector("textarea").offsetLeft - 50;
+            document.querySelector("#btn_select").style.marginLeft = left + "px";
+            document.querySelector("#btn_select").style.display = "block";
+        })
+        document.querySelector("#btn_select").addEventListener("click", function(){
+            document.querySelector("textarea").value = "SELECT * FROM table_name WHERE condition;"
+        })
+        document.querySelector("#btn_insert").addEventListener("click", function(){
+            document.querySelector("textarea").value = "INSERT INTO table_name (column1, column2, column3) VALUES (value1, value2, value3);"
+        })
+        document.querySelector("#btn_update").addEventListener("click", function(){
+            document.querySelector("textarea").value = "UPDATE table_name SET column1 = value1, column2 = value2 WHERE condition;"
+        })
     </script>
 <?php
     $query = $_POST['query'] ?? null;
@@ -151,12 +201,24 @@
         try{
             $sql = "$query";
             $stmt = $db->prepare($sql);
+            $msc = microtime(true);
             $stmt->execute();
+            $msc = microtime(true)-$msc;
             echo '<div class="response">';
-            while($wiersz = $stmt->fetch(PDO::FETCH_ASSOC)){
-              foreach($wiersz as $key => $value){
-                  echo $key." -> ".$value.'<br/>';
-              }
+            echo 'Wykonanie zajęło ('.$msc.'s)<br/>';
+            try{
+                while($wiersz = $stmt->fetch(PDO::FETCH_ASSOC)){
+                  foreach($wiersz as $key => $value){
+                      echo $key." -> ".$value.'<br/>';
+                  }
+                }
+            }catch(PDOException $e){
+                $affected = $stmt->rowCount();
+                if($affected == 1){
+                    echo 'Pomyślnie wykonano operację na '.$affected.' wierszu';
+                }else{
+                    echo 'Pomyślnie wykonano operację na '.$affected.' wierszach';
+                }
             }
             echo '</div>';
         }catch(PDOException $e){

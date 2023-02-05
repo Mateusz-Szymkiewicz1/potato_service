@@ -31,6 +31,12 @@
                         case 1049:
                             $message = "Nie udało się połączyć z bazą danych!";
                             break;
+                        case 1044:
+                            $message = "Użytkownik nie posiada uprawnień do bazy!";
+                            break;
+                        default:
+                            $message = "Nieprzewidziany błąd!";
+                            break;
                     }
                     echo '<div class="error">'.$error." - ".$message.'</div>';
                 }
