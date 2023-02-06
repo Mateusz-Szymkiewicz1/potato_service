@@ -28,8 +28,8 @@ document.querySelector(".zaznacz").addEventListener("click", function (e) {
             document.querySelectorAll("tr").forEach(tr => {
                 tr.removeAttribute("class");
             })
-            e.target.innerText = "Zaznacz wszystko";
         }
+        e.target.innerText = "Zaznacz wszystko";
     }
     zaznacz_counter++;
 })
