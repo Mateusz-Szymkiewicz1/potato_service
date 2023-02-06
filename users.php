@@ -29,21 +29,9 @@
         $error = $_GET['error'] ?? null;
         $operation_info = $_GET['operation_info'] ?? null;
         if($error){
-            switch($error){
-                case 1062:
-                    $err_desc = "Klucz unikalny nie może się powtarzać!";
-                    break;
-                case 1068:
-                    $err_desc = "Może istnieć tylko jeden klucz główny!";
-                    break;
-                case 1075:
-                    $err_desc = "Może istnieć tylko jedna kolumna z inkrementacją (i musi być ona kluczem)!";
-                    break;
-                default:
-                    $err_desc = "Nieprzewidziany błąd!";
-                    break;
-            }
-            echo '<div class="insert_response insert_error">'.$error." - ".$err_desc.'</div>';
+            require_once "get_err_desc.php";
+            $message = get_err_desc($error);
+            echo '<div class="insert_response insert_error">'.$error." - ".$message.'</div>';
         }
         if($operation_info == 1){
             echo '<div class="insert_response">Pomyślnie dodano użytkownika!</div>';

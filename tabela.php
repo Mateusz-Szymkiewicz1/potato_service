@@ -26,21 +26,9 @@
         echo '<div class="insert_response">Pomyślnie usunięto dane</div>';
     }
     if($insert_error){
-        switch($insert_error){
-            case 1452:
-                $error_message = "Wprowadzone klucze obce są niepoprawne!";
-                break;
-            case 1049:
-                $error_message = "Nie udało się połączyć z bazą danych!";
-                break;
-            case 1045:
-                $error_message = "Nie przyznano dostępu użytkownikowi!";
-                break;
-            default:
-                $error_message = "Nieprzewidziany błąd!";
-                break;
-        }
-        echo '<div class="insert_response insert_error">'.$insert_error.' - '.$error_message.'</div>';
+        require_once "get_err_desc.php";
+        $message = get_err_desc($error);
+        echo '<div class="insert_response insert_error">'.$insert_error.' - '.$message.'</div>';
     }
     ?>
     <a href="home.php" draggable="false"><img draggable="false" src="images/back.png" height="60px" width="50px" class="arrow"></a>

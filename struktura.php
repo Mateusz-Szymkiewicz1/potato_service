@@ -28,21 +28,9 @@
     $add_column_error = $_GET['add_column_error'] ?? null;
     $operation_info = $_GET['add_column_info'] ?? null;
     if($add_column_error){
-        switch($add_column_error){
-            case 1062:
-                $err_desc = "Klucz unikalny nie może się powtarzać!";
-                break;
-            case 1068:
-                $err_desc = "Może istnieć tylko jeden klucz główny!";
-                break;
-            case 1075:
-                $err_desc = "Może istnieć tylko jedna kolumna z inkrementacją (i musi być ona kluczem)!";
-                break;
-            default:
-                $err_desc = "Nieprzewidziany błąd!";
-                break;
-        }
-        echo '<div class="insert_response insert_error">'.$add_column_error." - ".$err_desc.'</div>';
+        require_once "get_err_desc.php";
+        $message = get_err_desc($error);
+        echo '<div class="insert_response insert_error">'.$add_column_error." - ".$message.'</div>';
     }
     if($operation_info == 1){
         echo '<div class="insert_response">Pomyślnie dodano kolumnę!</div>';

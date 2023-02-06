@@ -44,6 +44,9 @@
             if($wiersz_user['Grant_priv'] == "Y" or $wiersz_user['Create_user_priv'] == "Y"){
                echo '<a href="users.php" draggable="false"><div class="card"><i class="fa fa-user"></i><span>Użytkownicy</span></div></a>';
             }
+            if($wiersz_user['File_priv'] == "Y"){
+               echo '<a href="import_eksport.php" draggable="false"><div class="card"><i class="fa fa-download"></i><span>Import/Eksport</span></div></a>';
+            }
        ?>
        <a href="sql.php" draggable="false">
             <div class="card">

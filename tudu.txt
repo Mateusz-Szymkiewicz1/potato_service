@@ -1,4 +1,3 @@
 - uprawnienia użytkownika do pojedynczych tabel
-- usuwanie wierszy
-- edytowanie pól
-- edytowanie struktury
+- triggery (?)
+- eksport/import

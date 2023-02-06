@@ -24,20 +24,8 @@
             session_destroy();
                 $error = $_GET['error_code'] ?? null;
                 if($error){
-                    switch($error){
-                        case 1045:
-                            $message = "Użytkownik odrzucony!";
-                            break;
-                        case 1049:
-                            $message = "Nie udało się połączyć z bazą danych!";
-                            break;
-                        case 1044:
-                            $message = "Użytkownik nie posiada uprawnień do bazy!";
-                            break;
-                        default:
-                            $message = "Nieprzewidziany błąd!";
-                            break;
-                    }
+                    require_once "get_err_desc.php";
+                    $message = get_err_desc($error);
                     echo '<div class="error">'.$error." - ".$message.'</div>';
                 }
             ?>
