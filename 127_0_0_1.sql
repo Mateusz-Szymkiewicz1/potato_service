@@ -20,9 +20,9 @@ SET time_zone = "+00:00";
 --
 -- Baza danych: `baza_testowa`
 --
-DROP DATABASE IF EXISTS `baza_testowa2`;
-CREATE DATABASE IF NOT EXISTS `baza_testowa2` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `baza_testowa2`;
+DROP DATABASE IF EXISTS `baza_testowa`;
+CREATE DATABASE IF NOT EXISTS `baza_testowa` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `baza_testowa`;
 
 -- --------------------------------------------------------
 
