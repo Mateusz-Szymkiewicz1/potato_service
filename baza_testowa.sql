@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 13 Sty 2023, 10:20
--- Wersja serwera: 10.4.22-MariaDB
--- Wersja PHP: 8.1.2
+-- Czas generowania: 07 Lut 2023, 20:21
+-- Wersja serwera: 10.3.15-MariaDB
+-- Wersja PHP: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -20,9 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Baza danych: `baza_testowa`
 --
-DROP DATABASE IF EXISTS `baza_testowa2`;
-CREATE DATABASE IF NOT EXISTS `baza_testowa2` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `baza_testowa2`;
 
 -- --------------------------------------------------------
 
@@ -614,7 +612,7 @@ ALTER TABLE `warehouse`
   ADD KEY `warehouse_region_id_fk` (`region_id`);
 
 --
--- AUTO_INCREMENT dla zrzuconych tabel
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
