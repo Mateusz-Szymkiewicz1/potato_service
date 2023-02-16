@@ -110,5 +110,12 @@ a{
     background: #e74c3c;
     color: #fff;
 }
+.pet{
+    position: absolute;
+    top: 0px;
+    left: 30px;
+    border-radius: 30px;
+    pointer-events: none;
+}
 @-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}
 @-webkit-keyframes slideOutUp{0%{-webkit-transform:translateZ(0);transform:translateZ(0)}to{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:hidden}}
