@@ -29,6 +29,7 @@
 ?>
 <body>
     <div class="top">
+        <img src="images/pet.gif" class="pet" height="50px" width="50px" style="display: none;">
         <a href="#" draggable="false">
             <img src="favicon.ico" alt="Logo" height="70px" width="70px" class="logo" draggable="false">
             <h1>Strona główna</h1>
@@ -92,6 +93,12 @@
         document.querySelector(".przejdz").addEventListener("click", function() {
             let tabela = document.querySelector("select").value;
             window.location.replace(`tabela.php?name=${tabela}`);
+        })
+        document.querySelector(".logo").addEventListener("mouseenter", function(){
+            document.querySelector(".pet").removeAttribute("style");
+        })
+        document.querySelector(".logo").addEventListener("mouseleave", function(){
+            document.querySelector(".pet").style = "display: none;";
         })
     </script>
 </body>
