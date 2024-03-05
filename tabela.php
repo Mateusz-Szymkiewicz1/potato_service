@@ -124,12 +124,6 @@
             catch(Exception $e){
                 echo $e;
             }
-            function str_starts_with($haystack, $needle) {
-                return (string)$needle !== '' && strncmp($haystack, $needle, strlen($needle)) === 0;
-            }
-            function str_contains($haystack, $needle) {
-                return $needle !== '' && mb_strpos($haystack, $needle) !== false;
-            }
             $licznik = 0;
             echo '<div class="insert_form" style="display: none;"><h2>Dodaj wiersz</h2><form action="insert.php" method="post" id="insert_form"><input type="text" value="'.$tabela.'" name="tabela" hidden>';
             foreach($wiersz2 as $key => $value){

@@ -41,9 +41,6 @@
     if($operation_info == 3){
         echo '<div class="insert_response">Pomyślnie usunięto kolumny!</div>';
     }
-    function str_contains($haystack, $needle) {
-                return $needle !== '' && mb_strpos($haystack, $needle) !== false;
-    }
     session_start();
         $tabela = $_GET['name'] ?? null;
         if(!$tabela or !$_SESSION['login']){
